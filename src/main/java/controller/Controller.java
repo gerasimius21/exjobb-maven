@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controller;
 
 import java.util.List;
@@ -13,6 +12,10 @@ import model.DAO.ClubsDAO;
 import model.DAO.DonationsDAO;
 import model.DAO.PlayersDAO;
 import model.DAO.TransfersDAO;
+import model.DTO.DonationDTO;
+import model.DTO.TransferDTO;
+import model.Donation;
+import model.Transfer;
 
 /**
  *
@@ -20,32 +23,52 @@ import model.DAO.TransfersDAO;
  */
 @Stateless
 public class Controller {
-    
+
     @Inject
-    PlayersDAO player;
-    
+    PlayersDAO playerDAO;
+
     @Inject
-    ClubsDAO club;
-    
+    ClubsDAO clubDAO;
+
     @Inject
-    TransfersDAO transfer;
-    
+    TransfersDAO transferDAO;
+
     @Inject
-    DonationsDAO donation;
-    
-    
+    DonationsDAO donationDAO;
+
+    Transfer transfer;
+    Donation donation;
+
     public PlayersDAO getPlayers() {
-        System.out.println("Svemir da baws!");
-        return player;
+        return playerDAO;
     }
 
-    
     public ClubsDAO getClubs() {
-        return club;
-        
+        return clubDAO;
+
     }
-    
+
     public List getAllClubs() {
-        return club.findAll();
+        return clubDAO.findAll();
+    }
+
+    public void saveDonation(TransferDTO transferDTO, DonationDTO donationDTO) {
+        if (transferDAO.findByClubAndPlayer(transferDTO.getClub(), transferDTO.getPlayer()) == null) {
+            transfer.setClubid(transferDTO.getClub());
+            transfer.setPlayerid(transferDTO.getPlayer());
+            transferDAO.addTransfer(transfer);
+
+            donation.setAmount((float) donationDTO.getAmount());
+            donation.setTransferid(transferDAO.findByClubAndPlayer(transferDTO.getClub(), transferDTO.getPlayer()));
+            donation.setPpkey(donationDTO.getPreApprovalKey());
+
+            donationDAO.addDonation(donation);
+        } else {
+            donation.setAmount((float) donationDTO.getAmount());
+            donation.setPpkey(donationDTO.getPreApprovalKey());
+            donation.setTransferid(transferDAO.findByClubAndPlayer(transferDTO.getClub(), transferDTO.getPlayer()));
+            
+            donationDAO.addDonation(donation);
+        }
     }
 }

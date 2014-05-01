@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package model.DAO;
 
 import java.util.List;
@@ -20,7 +19,7 @@ import model.Players;
  */
 @ApplicationScoped
 public class PlayersDAO implements PlayersDAOInterface {
-    
+
     @PersistenceContext(unitName = "fansferPU")
     private EntityManager em;
 
@@ -39,13 +38,13 @@ public class PlayersDAO implements PlayersDAOInterface {
     public Players findByID(int id) {
         return em.find(Players.class, id);
     }
-    
+
     @Override
     public List<Players> findByClub(String clubname) {
         TypedQuery getClubByName = em.createNamedQuery("Clubs.findByClubname", Clubs.class);
         getClubByName.setParameter("clubname", clubname);
-        Clubs club = (Clubs)getClubByName.getSingleResult();
-        
+        Clubs club = (Clubs) getClubByName.getSingleResult();
+
         System.out.println(club);
         int clubId = club.getIdclubs();
         System.out.println(clubId);
@@ -57,5 +56,11 @@ public class PlayersDAO implements PlayersDAOInterface {
         TypedQuery<Players> query = em.createQuery(
                 "SELECT g FROM Clubs g", Players.class);
         return query.getResultList();
-    }  
+    }
+
+    public Players findByName(String playerName) {
+        TypedQuery getPlayerByName = em.createNamedQuery("Players.findByPlayername", Players.class);
+        getPlayerByName.setParameter("playername", playerName);
+        return (Players)getPlayerByName.getSingleResult();
+    }
 }

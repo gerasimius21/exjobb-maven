@@ -45,5 +45,10 @@ public class ClubsDAO implements ClubsDAOInterface {
                 "SELECT g FROM Clubs g", Clubs.class);
         return query.getResultList();
     }
-
+    
+    public Clubs findByName(String clubName) {
+        TypedQuery getClubByName = em.createNamedQuery("Clubs.findByClubname", Clubs.class);
+        getClubByName.setParameter("clubname", clubName);
+        return (Clubs)getClubByName.getSingleResult();       
+    }
 }

@@ -10,6 +10,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import model.Clubs;
+import model.Players;
 import model.Transfer;
 
 /**
@@ -43,6 +45,13 @@ public class TransfersDAO implements TransfersDAOInterface {
         TypedQuery<Transfer> query = em.createQuery(
                 "SELECT g FROM Transfer g", Transfer.class);
         return query.getResultList();
+    }
+    
+    public Transfer findByClubAndPlayer(Clubs club, Players player) {
+        return (Transfer)em.createQuery("SELECT t FROM Transfer t WHERE t.clubid.idclubs = ?1 AND t.playerid.idplayers = ?2")
+                .setParameter(1, club.getIdclubs())
+                .setParameter(2, player.getIdplayers())
+                .getSingleResult();
     }
 
 }
