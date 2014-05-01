@@ -4,14 +4,21 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions">
     <h:head>
     </h:head>
     <h:body>
+
         <ui:composition template="template/common/layout.xhtml">
 
             <ui:define name="content">
-                <h:form id="form">  
+                <h:form id="form">
+                    <br/>
+                    <br/>
+                    <p:message for="number" /> 
+                    <br/>
+                    <br/>
                     <p:dataTable id="clubTable" var="player" value="#{clubBean.players}" rowKey="#{player.jerseynumber}" selectionMode="single" 
                                  selection="#{clubBean.selectedPlayer}"  tableStyle="width:auto" >  
 
@@ -56,14 +63,28 @@
                                 <f:selectItems value="#{clubBean.clubs}" var="currentClub" itemValue="#{currentClub.clubname}" itemLabel="#{currentClub.clubname}"/>
                             </h:selectOneMenu>
 
-                            <h:outputText value="Amount:" />  
-                            <h:inputText size="10" value="#{clubBean.amount}" />  
+
+                            <h:outputLabel for="number" value="Amount:" style="font-weight:bold"/>                      
+                            <h:inputText id="number" value="#{clubBean.amount}" label="Number">  
+                                <f:validateDoubleRange minimum="1" maximum="12" />  
+                            </h:inputText>  
+                             
+                            
+
+
+
                         </h:panelGrid>  
                         <h:commandButton value=" " action="#{preBean.preapprove()}" style="background-image: url(./images/paynow.gif) ; width: 107px; height: 26px"  >
                         </h:commandButton>
-                    </p:dialog> 
+                    </p:dialog>
+
                     <h:commandButton value=" " action="#{preBean.executePayment()}" style="background-image: url(./images/paynow.gif) ; width: 107px; height: 26px"  >
                     </h:commandButton>
+                    <h:outputText value="Amount:" />  
+
+                    <p:inputMask value="#{clubBean.amount}" mask="999"/>    
+
+
                 </h:form> 
             </ui:define>
 

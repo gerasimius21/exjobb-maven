@@ -30,9 +30,6 @@ public class MenuBean implements Serializable{
     @EJB
     Controller controller;
     
-    @Inject
-    ClubBean pvt;
-
     private String club;
 
     public String getClub() {

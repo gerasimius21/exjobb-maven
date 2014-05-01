@@ -63,7 +63,7 @@ public class PreaprovalBean {
         preRequest.setReturnUrl("http://localhost:8080/sdktest/clubView.jsf");
         preRequest.setCurrencyCode("USD");
         preRequest.setIpnNotificationUrl("http://replaceIpnUrl.com");
-        preRequest.setStartingDate("2014-04-29");
+        preRequest.setStartingDate("2014-04-30");
         preRequest.setEndingDate("2014-05-01");
         preRequest.setMaxNumberOfPayments(1);
         preRequest.setMaxTotalAmountOfAllPayments(club.getAmount());

@@ -10,6 +10,8 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,7 +19,7 @@ import model.Clubs;
 import model.Players;
 
 @Named("clubBean")
-@SessionScoped
+@RequestScoped
 public class ClubBean implements Serializable {
 
     @EJB
@@ -63,6 +65,7 @@ public class ClubBean implements Serializable {
 
     public void setSelectedPlayer(Players selectedPlayer) {
         this.selectedPlayer = selectedPlayer;
+        clubs.remove(this.selectedPlayer.getClubid());
     }
     
     public void setAmount(Double amount) {
