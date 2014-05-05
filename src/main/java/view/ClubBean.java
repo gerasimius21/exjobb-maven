@@ -1,4 +1,5 @@
 /*
+
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -10,13 +11,12 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import model.Clubs;
 import model.Players;
+import model.Transfer;
 
 @Named("clubBean")
 @RequestScoped
@@ -24,13 +24,15 @@ public class ClubBean implements Serializable {
 
     @EJB
     private Controller controller;
+    
     private List<Players> clubPlayers;
     private Players selectedPlayer;
     
     private List<Clubs> clubs;
-    private String selectedClub;
+    private Clubs selectedClub;
 
-    private Double amount;
+//    private List<Transfer> otherHotTransfers;
+//    private List<Players> clubHotPlayers;
     
     @Inject
     MenuBean mb;
@@ -41,8 +43,9 @@ public class ClubBean implements Serializable {
         System.out.println("Club: " + mb.getClub());
         clubs = controller.getClubs().findAll();
         clubPlayers = controller.getPlayers().findByClub(mb.getClub());
+//        otherHotTransfers = controller.getOtherHotPlayers(mb.getClub());
     }
-    
+
     public List<Clubs> getClubs() {
         return clubs;
     }
@@ -51,11 +54,15 @@ public class ClubBean implements Serializable {
         return clubPlayers;
     } 
     
-    public String getSelectedClub() {
+//    public List<Transfer> getOtherHotTransfers() {
+//        return otherHotTransfers;
+//    }
+    
+    public Clubs getSelectedClub() {
         return selectedClub;
     }
     
-    public void setSelectedClub(String selectedClub) {
+    public void setSelectedClub(Clubs selectedClub) {
         this.selectedClub = selectedClub;
     }
     
@@ -68,12 +75,5 @@ public class ClubBean implements Serializable {
         clubs.remove(this.selectedPlayer.getClubid());
     }
     
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-    
-    public Double getAmount() {
-        return amount;
-    }
 
 }

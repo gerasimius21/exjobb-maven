@@ -8,14 +8,10 @@ package view;
 import controller.Controller;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
 import javax.inject.Named;
 import model.Clubs;
 
@@ -43,6 +39,7 @@ public class MenuBean implements Serializable{
     }
 
     public List<Clubs> getAllClubs() {
+        System.out.println("getting all clubs");
         return controller.getAllClubs();
     }
     

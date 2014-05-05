@@ -13,6 +13,7 @@ import javax.persistence.TypedQuery;
 import model.Clubs;
 import model.Players;
 import model.Transfer;
+import model.DAO.ClubsDAO;
 
 /**
  *
@@ -52,6 +53,13 @@ public class TransfersDAO implements TransfersDAOInterface {
                 .setParameter(1, club.getIdclubs())
                 .setParameter(2, player.getIdplayers())
                 .getSingleResult();
+    }
+    
+    public List<Transfer> findByClub(String clubname) {
+        ClubsDAO clubsDAO = new ClubsDAO();
+        Clubs club  = clubsDAO.findByName(clubname);
+        return em.createQuery("SELECT t FROM Transfer t WHERE t.clubid = ?1")
+                .setParameter("clubid", club.getIdclubs()).getResultList();
     }
 
 }

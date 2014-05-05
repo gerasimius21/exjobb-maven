@@ -20,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -32,7 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Transfer.findAll", query = "SELECT t FROM Transfer t"),
-    @NamedQuery(name = "Transfer.findByIdtransfer", query = "SELECT t FROM Transfer t WHERE t.idtransfer = :idtransfer")})
+    @NamedQuery(name = "Transfer.findByIdtransfer", query = "SELECT t FROM Transfer t WHERE t.idtransfer = :idtransfer"),
+    @NamedQuery(name = "Transfer.findByAllDonations", query = "SELECT t FROM Transfer t WHERE t.allDonations = :allDonations")})
 public class Transfer implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,12 +42,16 @@ public class Transfer implements Serializable {
     @Basic(optional = false)
     @Column(name = "idtransfer")
     private Integer idtransfer;
-    @JoinColumn(name = "clubid", referencedColumnName = "idclubs")
-    @ManyToOne
-    private Clubs clubid;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "allDonations")
+    private float allDonations;
     @JoinColumn(name = "playerid", referencedColumnName = "idplayers")
     @ManyToOne
     private Players playerid;
+    @JoinColumn(name = "clubid", referencedColumnName = "idclubs")
+    @ManyToOne
+    private Clubs clubid;
     @OneToMany(mappedBy = "transferid")
     private Collection<Donation> donationCollection;
 
@@ -56,6 +62,11 @@ public class Transfer implements Serializable {
         this.idtransfer = idtransfer;
     }
 
+    public Transfer(Integer idtransfer, float allDonations) {
+        this.idtransfer = idtransfer;
+        this.allDonations = allDonations;
+    }
+
     public Integer getIdtransfer() {
         return idtransfer;
     }
@@ -64,12 +75,12 @@ public class Transfer implements Serializable {
         this.idtransfer = idtransfer;
     }
 
-    public Clubs getClubid() {
-        return clubid;
+    public float getAllDonations() {
+        return allDonations;
     }
 
-    public void setClubid(Clubs clubid) {
-        this.clubid = clubid;
+    public void setAllDonations(float allDonations) {
+        this.allDonations = allDonations;
     }
 
     public Players getPlayerid() {
@@ -78,6 +89,14 @@ public class Transfer implements Serializable {
 
     public void setPlayerid(Players playerid) {
         this.playerid = playerid;
+    }
+
+    public Clubs getClubid() {
+        return clubid;
+    }
+
+    public void setClubid(Clubs clubid) {
+        this.clubid = clubid;
     }
 
     @XmlTransient

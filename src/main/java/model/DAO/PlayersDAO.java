@@ -41,9 +41,8 @@ public class PlayersDAO implements PlayersDAOInterface {
 
     @Override
     public List<Players> findByClub(String clubname) {
-        TypedQuery getClubByName = em.createNamedQuery("Clubs.findByClubname", Clubs.class);
-        getClubByName.setParameter("clubname", clubname);
-        Clubs club = (Clubs) getClubByName.getSingleResult();
+        Clubs club = (Clubs)em.createNamedQuery("Clubs.findByClubname", Clubs.class)
+                .setParameter("clubname", clubname).getSingleResult();
 
         System.out.println(club);
         int clubId = club.getIdclubs();

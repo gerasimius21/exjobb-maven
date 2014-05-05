@@ -21,6 +21,10 @@ public class TransferDTO {
         this.club = club;
         this.player = player;
     }
+    
+    public TransferDTO() {
+        
+    }
 
     public Players getPlayer() {
         return player;

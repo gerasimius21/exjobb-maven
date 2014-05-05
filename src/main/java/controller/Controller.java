@@ -5,7 +5,12 @@
  */
 package controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import model.DAO.ClubsDAO;
@@ -15,6 +20,7 @@ import model.DAO.TransfersDAO;
 import model.DTO.DonationDTO;
 import model.DTO.TransferDTO;
 import model.Donation;
+import model.Players;
 import model.Transfer;
 
 /**
@@ -36,39 +42,73 @@ public class Controller {
     @Inject
     DonationsDAO donationDAO;
 
-    Transfer transfer;
-    Donation donation;
-
     public PlayersDAO getPlayers() {
         return playerDAO;
     }
 
     public ClubsDAO getClubs() {
         return clubDAO;
-
     }
 
     public List getAllClubs() {
         return clubDAO.findAll();
     }
 
-    public void saveDonation(TransferDTO transferDTO, DonationDTO donationDTO) {
-        if (transferDAO.findByClubAndPlayer(transferDTO.getClub(), transferDTO.getPlayer()) == null) {
+    public void saveTransaction(TransferDTO transferDTO, DonationDTO donationDTO) {
+        Transfer transfer = new Transfer();
+        List<Transfer> transfers = transferDAO.findAll();
+        for (Transfer t : transfers) {
+            System.out.println("DATABASE clubid = " + t.getClubid() + " playerid = " + t.getPlayerid());
+            System.out.println("TRANSFER clubid = " + transferDTO.getClub().getIdclubs() + " playerid = " + transferDTO.getPlayer().getIdplayers());
+            if ((t.getClubid().getIdclubs() == transferDTO.getClub().getIdclubs())
+                    && (t.getPlayerid().getIdplayers() == transferDTO.getPlayer().getIdplayers())) {
+                System.out.println((t.getClubid().getIdclubs() == transferDTO.getClub().getIdclubs()));
+                System.out.println((t.getPlayerid().getIdplayers() == transferDTO.getPlayer().getIdplayers()));
+                transfer = t;
+            } else {
+                transfer = null;
+            }
+        }
+        if (transfer == null) {
+            transfer = new Transfer();
             transfer.setClubid(transferDTO.getClub());
             transfer.setPlayerid(transferDTO.getPlayer());
+            transfer.setAllDonations((float) donationDTO.getAmount());
             transferDAO.addTransfer(transfer);
-
-            donation.setAmount((float) donationDTO.getAmount());
-            donation.setTransferid(transferDAO.findByClubAndPlayer(transferDTO.getClub(), transferDTO.getPlayer()));
-            donation.setPpkey(donationDTO.getPreApprovalKey());
-
-            donationDAO.addDonation(donation);
+            System.out.println("Transfer==null saving donation" + transfer);
+            transfer = transferDAO.findByClubAndPlayer(transferDTO.getClub(), transferDTO.getPlayer());
+            saveDonation(donationDTO, transfer);
         } else {
-            donation.setAmount((float) donationDTO.getAmount());
-            donation.setPpkey(donationDTO.getPreApprovalKey());
-            donation.setTransferid(transferDAO.findByClubAndPlayer(transferDTO.getClub(), transferDTO.getPlayer()));
-            
-            donationDAO.addDonation(donation);
+            System.out.println("Transfer exists saving donation" + transfer);
+            transfer = transferDAO.findByClubAndPlayer(transferDTO.getClub(), transferDTO.getPlayer());
+            saveDonation(donationDTO, transfer);
+        }
+    }
+
+    private void saveDonation(DonationDTO donationDTO, Transfer transfer) {
+        System.out.println(donationDTO.getAmount() + donationDTO.getPreApprovalKey() + transfer.getIdtransfer());
+        Donation donation = new Donation();
+        donation.setAmount((float) donationDTO.getAmount());
+        donation.setPpkey(donationDTO.getPreApprovalKey());
+        donation.setTransferid(transfer);
+        donationDAO.addDonation(donation);
+    }
+// INTE FÄRDIGT MÅSTE JOBBA PÅ VIDARE
+//    public List<Transfer> getOtherHotPlayers(String clubname) {
+//        List<Transfer> transfers = transferDAO.findByClub(clubname);
+//        Map<Players, Transfer> hotTransfers = new HashMap<>();
+//        Collections.sort(transfers, new DonationComparator());
+//        for (int i = 0; i < 5; i++) {
+//            hotTransfers.put(null, null);
+//        } 
+//        return hotTransfers;
+//    }
+
+    class DonationComparator implements Comparator<Transfer> {
+
+        @Override
+        public int compare(Transfer a, Transfer b) {
+            return a.getAllDonations() < b.getAllDonations() ? -1 : a.getAllDonations() == b.getAllDonations() ? 0 : 1;
         }
     }
 }

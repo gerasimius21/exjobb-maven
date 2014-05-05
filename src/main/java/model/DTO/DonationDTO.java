@@ -12,13 +12,16 @@ package model.DTO;
  */
 public class DonationDTO {
 
-    private double amount;
+    private Double amount;
     private String preApprovalKey;
 
     
     public DonationDTO(double amount, String key) {
         this.amount = amount;
         this.preApprovalKey = key;
+    }
+    
+    public DonationDTO() {
     }
 
     public double getAmount() {
