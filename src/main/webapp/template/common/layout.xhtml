@@ -9,9 +9,9 @@
     <h:head>
         <link href="css/whitenblack/jquery-ui-1.10.4.custom.css" rel="stylesheet"/>
 
-            <script src="js/jquery-1.10.2.js"></script> 
-            <script src="js/jquery-ui-1.10.4.custom.js"></script>
-<!--        <h:outputScript library="primefaces" name="./js/jquery.js" />-->
+        <script src="js/jquery-1.10.2.js"></script> 
+        <script src="js/jquery-ui-1.10.4.custom.js"></script>
+        <!--        <h:outputScript library="primefaces" name="./js/jquery.js" />-->
         <script>
             $(function() {
 
@@ -184,20 +184,23 @@
                 </ui:insert>
             </div>
 
-            <div id="footer" style="padding-bottom: 20px">
+            <div id="footer" style="bottom: 20px;
+                 left: 0;
+                 right: 0;
+                 position: absolute;">
                 <ui:insert name="footer" >
                     <ui:include src="/template/common/footer.xhtml" />
                 </ui:insert>
             </div>
-            
-            <div style="width: 180px; position: fixed; right: 10px; top: 10px;" align="right">
+
+            <div style="width: 180px; position: fixed; right: 10px; top: 10px;">
                 <div id="rss">
                     <ui:insert name="rssfeed">
                         <ui:include src="/template/common/rssfeed.xhtml"/>
                     </ui:insert>
-                    
+
                 </div>
-                
+
             </div>
 
         </div>
