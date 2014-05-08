@@ -15,7 +15,9 @@ import com.paypal.svcs.types.ap.ReceiverList;
 import com.paypal.svcs.types.common.AckCode;
 import com.paypal.svcs.types.common.RequestEnvelope;
 import controller.Controller;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,11 +62,11 @@ public class PreaprovalBean {
         RequestEnvelope requestEnvelope = new RequestEnvelope("en_US");
         preRequest.setRequestEnvelope(requestEnvelope);
         preRequest.setCancelUrl("https://devtools-paypal.com/guide/ap_chained_payment?cancel=true");
-        preRequest.setReturnUrl("http://localhost:8080/sdktest/clubView.jsf");
+        preRequest.setReturnUrl("http://localhost:8080/sdktest/test2.jsf");
         preRequest.setCurrencyCode("EUR");
         preRequest.setIpnNotificationUrl("http://replaceIpnUrl.com");
-        preRequest.setStartingDate("2014-05-04");
-        preRequest.setEndingDate("2014-05-05");
+        preRequest.setStartingDate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        preRequest.setEndingDate("2014-05-30");
         preRequest.setMaxNumberOfPayments(1);
 
         System.out.println(club.getSelectedClub().getClubname());
@@ -98,8 +100,8 @@ public class PreaprovalBean {
 
     public void executePayment() throws Exception {
         payRequest = new PayRequest();
-
         List<Receiver> receivers = new ArrayList<>();
+        
         primary = new Receiver();
         primary.setAmount(amount);
         primary.setEmail("miketa.bogdanovic-facilitator@gmail.com");
@@ -142,6 +144,7 @@ public class PreaprovalBean {
 
         controller.saveTransaction(transferDTO, donationDTO);
     }
+   
 
     public void setAmount(Double amount) {
         System.out.println("clubBean setAmount" + amount);

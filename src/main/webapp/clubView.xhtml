@@ -64,24 +64,19 @@
                                 <h:commandButton value=" " action="#{preBean.preapprove()}" style="background-image: url(./images/paynow.gif) ; width: 107px; height: 26px"  >
                                 </h:commandButton>
                             </p:dialog>
-
-                            <h:commandButton value=" " action="#{preBean.executePayment()}" style="background-image: url(./images/paynow.gif) ; width: 107px; height: 26px"  >
-                            </h:commandButton>
-
-
                         </h:form> 
                     </div>
                     <div style="float: left;">
                         <div>
-                            <p:dataTable id="otherPlayers"  var="oTransfers" tableStyle="width:auto">
+                            <p:dataTable id="otherPlayers"  var="oTransfers" value="#{clubBean.otherHotTransfers}"  tableStyle="width:auto">
                                 <!--                            <f:facet name="header">
                                                                 Hot Transfers To Club
                                                             </f:facet>-->
                                 <p:column headerText="Player">
-
+                                    <h:outputText value="#{oTransfers.playerid.playername}"/>
                                 </p:column>
                                 <p:column headerText="Current Donations Amount">
-
+                                    <h:outputText value="#{oTransfers.allDonations}"/>
                                 </p:column>
                             </p:dataTable>
                         </div>

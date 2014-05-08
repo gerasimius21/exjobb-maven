@@ -47,8 +47,10 @@ public class ClubsDAO implements ClubsDAOInterface {
     }
     
     public Clubs findByName(String clubName) {
+        System.out.println("Semircina");
         TypedQuery getClubByName = em.createNamedQuery("Clubs.findByClubname", Clubs.class);
         getClubByName.setParameter("clubname", clubName);
+        System.out.println("clubDAO find by name" + clubName);
         return (Clubs)getClubByName.getSingleResult();       
     }
 }

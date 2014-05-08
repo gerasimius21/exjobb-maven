@@ -31,8 +31,7 @@ public class ClubBean implements Serializable {
     private List<Clubs> clubs;
     private Clubs selectedClub;
 
-//    private List<Transfer> otherHotTransfers;
-//    private List<Players> clubHotPlayers;
+//    private List clubHotPlayers;
     
     @Inject
     MenuBean mb;
@@ -43,7 +42,7 @@ public class ClubBean implements Serializable {
         System.out.println("Club: " + mb.getClub());
         clubs = controller.getClubs().findAll();
         clubPlayers = controller.getPlayers().findByClub(mb.getClub());
-//        otherHotTransfers = controller.getOtherHotPlayers(mb.getClub());
+
     }
 
     public List<Clubs> getClubs() {
@@ -54,9 +53,9 @@ public class ClubBean implements Serializable {
         return clubPlayers;
     } 
     
-//    public List<Transfer> getOtherHotTransfers() {
-//        return otherHotTransfers;
-//    }
+    public List<Transfer> getOtherHotTransfers() {
+        return controller.getOtherHotPlayers(mb.getClub());
+    }
     
     public Clubs getSelectedClub() {
         return selectedClub;
@@ -72,6 +71,7 @@ public class ClubBean implements Serializable {
 
     public void setSelectedPlayer(Players selectedPlayer) {
         this.selectedPlayer = selectedPlayer;
+        System.out.println("setSelectedPlayer clubBean: " + this.selectedPlayer);
         clubs.remove(this.selectedPlayer.getClubid());
     }
     

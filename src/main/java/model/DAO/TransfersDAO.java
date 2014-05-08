@@ -7,13 +7,13 @@ package model.DAO;
 
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import model.Clubs;
 import model.Players;
 import model.Transfer;
-import model.DAO.ClubsDAO;
 
 /**
  *
@@ -24,6 +24,9 @@ public class TransfersDAO implements TransfersDAOInterface {
 
     @PersistenceContext(unitName = "fansferPU")
     private EntityManager em;
+    
+    @Inject
+    ClubsDAO clubDAO;
 
     @Override
     public void addTransfer(Transfer transfer) {
@@ -56,10 +59,11 @@ public class TransfersDAO implements TransfersDAOInterface {
     }
     
     public List<Transfer> findByClub(String clubname) {
-        ClubsDAO clubsDAO = new ClubsDAO();
-        Clubs club  = clubsDAO.findByName(clubname);
-        return em.createQuery("SELECT t FROM Transfer t WHERE t.clubid = ?1")
-                .setParameter("clubid", club.getIdclubs()).getResultList();
+        System.out.println("TransferDAO findbyclub clubname: " + clubname);
+        Clubs club  = clubDAO.findByName(clubname);
+        System.out.println(club.getIdclubs());
+        return em.createQuery("SELECT t FROM Transfer t WHERE t.clubid.idclubs = ?1")
+                .setParameter(1, club.getIdclubs()).getResultList();
     }
 
 }
