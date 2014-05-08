@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+    <h:head>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="template/common/layout.xhtml">
+
+            <ui:define name="content">
+
+                <div style="padding-top: 40px; float: left; width: 350px; height: 500px; margin-left: 120px; font-size: 14px">
+                    <p:panel header="Player Name" style="height: 250px">
+                        <h:graphicImage width="133" height="170" value="images/unknown.png"/>
+                    </p:panel>
+                </div>
+
+                <div align="left" style="padding-top: 40px; float: right; width: 350px; height: 500px; margin-right: 120px; font-size: 14px">
+                    
+                    <p:panel header="Player Info" style="height: 250px">
+                        <h:outputText value="Name: [SOME NAME]"></h:outputText><br/>
+                        <h:outputText value="Age: [SOME AGE]"></h:outputText><br/>
+                        <h:outputText value="Jersy#: [SOME #]"></h:outputText><br/>
+                        <h:outputText value="Yellow Cards: [SOME #]"></h:outputText><br/>
+                        <h:outputText value="Red Cards: [SOME #]"></h:outputText><br/>
+                        <h:outputText value="Games Played: [SOME #]"></h:outputText><br/>
+                        <h:outputText value="Goals: [SOME #]"></h:outputText><br/>
+                    </p:panel>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+

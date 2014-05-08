@@ -14,11 +14,14 @@
 
             <ui:define name="content">
                 <div>
-                    <div style="float: left">
+                    <div style="float: left;
+                         margin-top: -50px;
+                         margin-right: 20px;
+                         padding-left: 10px;">
                         <h:form id="form">
                             <br/>
                             <br/>
-                            <p:message for="number" /> 
+<!--                            <p:message for="number" /> -->
                             <br/>
                             <br/>
                             <p:dataTable id="clubTable" var="player" value="#{clubBean.players}" rowKey="#{player.jerseynumber}" selectionMode="single" 
@@ -56,17 +59,24 @@
                                         <f:selectItems value="#{clubBean.clubs}" var="selectedClub" itemValue="#{selectedClub}" itemLabel="#{selectedClub.clubname}"/>
                                     </h:selectOneMenu>
                                     <h:outputLabel for="number" value="Amount:" style="font-weight:bold"/>                      
-                                    <h:inputText id="number" value="#{preBean.amount}" label="Number">  
-                                        <f:convertNumber currencyCode="EUR" type="currency"/>
-                                        <!--                                <f:validateDoubleRange minimum="1" maximum="12" />  -->
-                                    </h:inputText>  
+<!--                                    <h:inputText id="number" value="#{preBean.amount}" label="Number">  
+
+                                        <f:validateDoubleRange minimum="1" maximum="12" /> 
+                                    </h:inputText>-->
+                                    <p:panel header="Masks">
+                                        <h:panelGrid columns="2" cellpadding="5">
+                                            <p:inputMask value="#{maskController.date}" mask="99/99/9999"/>
+                                        </h:panelGrid>
+                                    </p:panel>
                                 </h:panelGrid>  
                                 <h:commandButton value=" " action="#{preBean.preapprove()}" style="background-image: url(./images/paynow.gif) ; width: 107px; height: 26px"  >
                                 </h:commandButton>
                             </p:dialog>
                         </h:form> 
                     </div>
-                    <div style="float: left;">
+                    <div style="float: right;
+                         margin-top: 10px;
+                         padding-right: 10px;">
                         <div>
                             <p:dataTable id="otherPlayers"  var="oTransfers" value="#{clubBean.otherHotTransfers}"  tableStyle="width:auto">
                                 <!--                            <f:facet name="header">
@@ -81,7 +91,7 @@
                             </p:dataTable>
                         </div>
                         <div>
-                            <p:dataTable id="clubPlayers" var="cTransfers" tableStyle="width:auto">
+                            <p:dataTable id="clubPlayers" var="cTransfers" tableStyle="width:320px">
                                 <!--                            <f:facet name="header">
                                                                 Hot Transfers From Club
                                                             </f:facet>-->

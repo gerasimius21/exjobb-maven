@@ -98,9 +98,13 @@ public class Controller {
         donation.setTransferid(transfer);
         donationDAO.addDonation(donation);
     }
-//// INTE FÄRDIGT MÅSTE JOBBA PÅ VIDARE
-//    public Map<String, Float> getOtherHotPlayers(String clubname) {
-//        System.out.println("getOtherHotPlayers");
+    
+    public List<Transfer> getTransfers(){
+        System.out.println("From controller number of transfers: " + transferDAO.findAll().size());
+        return transferDAO.findAll();
+    }
+// INTE FÄRDIGT MÅSTE JOBBA PÅ VIDARE
+//    public List<Transfer> getOtherHotPlayers(String clubname) {
 //        List<Transfer> transfers = transferDAO.findByClub(clubname);
 //        System.out.println("sort transfers");
 //        Collections.sort(transfers, new DonationComparator());        

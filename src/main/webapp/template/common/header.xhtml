@@ -15,15 +15,15 @@
                 <h:outputText rendered="#{not lp.loggedIn}" value="#{lp.welcomeLine}"></h:outputText>
             </div>
 
-            <div style="height: 180px; width: 960px; background-color: #dadada;">
-
+            <div style="height: 205px; width: 960px; background-color: #ffffff;">
+                <h:graphicImage value="images/logo.jpg" width="" height="190" style="padding-top: 15px; position: absolute" />
                 <div style="position: fixed; z-index: 21">
 
                     <div style="position: absolute; z-index: 10">
                         <p:menu styleClass="ui-menubar" style="width: 954px;">
                             <p:menuitem value="Home" url="./index.jsf"/> 
                             <p:menuitem value="Overview" url="#"/>
-                            <p:menuitem value="Demos" url="#"/>  
+                            <p:menuitem value="Admin" url="./adminView.jsf"/>  
                             <p:menuitem value="Documentation" url="#"/>  
                             <p:menuitem value="Support" url="#"/>  
                             <p:menuitem value="Social" url="#"/>
@@ -44,7 +44,8 @@
                     </div>
 
                 </div>
-
+                <!--                <p:media value="http://www.youtube.com/v/KZnUr8lcqjo" style="top: 40px; left: 360px; position: relative" width="225" height="160" player="flash"/>-->
+                <iframe width="225" height="160" src="//www.youtube.com/embed/Ul9wCaNjrkM?modestbranding=0;rel=0;showinfo=0;autohide=1" style="top: 40px; left: 360px; position: relative" frameborder="0"></iframe>
 
             </div>
 
