@@ -34,7 +34,7 @@ public class TransferBean implements Serializable {
     @PostConstruct
     public void init() {
         System.out.println("Post construct invoked");
-        transfers = controller.getTransfers();
+        transfers = controller.getAllTransfers();
     }
 
     public List<Transfer> getTransfers() {

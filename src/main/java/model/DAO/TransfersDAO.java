@@ -27,6 +27,9 @@ public class TransfersDAO implements TransfersDAOInterface {
     
     @Inject
     ClubsDAO clubDAO;
+    
+    @Inject
+    PlayersDAO playerDAO;
 
     @Override
     public void addTransfer(Transfer transfer) {
@@ -52,9 +55,9 @@ public class TransfersDAO implements TransfersDAOInterface {
     }
     
     public Transfer findByClubAndPlayer(Clubs club, Players player) {
-        return (Transfer)em.createQuery("SELECT t FROM Transfer t WHERE t.clubid.idclubs = ?1 AND t.playerid.idplayers = ?2")
-                .setParameter(1, club.getIdclubs())
-                .setParameter(2, player.getIdplayers())
+        return (Transfer)em.createQuery("SELECT t FROM Transfer t WHERE t.clubid = ?1 AND t.playerid = ?2")
+                .setParameter(1, club)
+                .setParameter(2, player)
                 .getSingleResult();
     }
     
@@ -64,6 +67,11 @@ public class TransfersDAO implements TransfersDAOInterface {
         System.out.println(club.getIdclubs());
         return em.createQuery("SELECT t FROM Transfer t WHERE t.clubid.idclubs = ?1")
                 .setParameter(1, club.getIdclubs()).getResultList();
+    }
+    
+    public List<Transfer> findByPlayer(Players player) {
+        return em.createQuery("SELECT t FROM Transfer t WHERE t.playerid = ?1")
+                .setParameter(1, player).getResultList();
     }
 
 }

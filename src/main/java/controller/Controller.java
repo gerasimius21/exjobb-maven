@@ -99,25 +99,12 @@ public class Controller {
         donationDAO.addDonation(donation);
     }
     
-    public List<Transfer> getTransfers(){
+    public List<Transfer> getAllTransfers(){
         System.out.println("From controller number of transfers: " + transferDAO.findAll().size());
         return transferDAO.findAll();
     }
-// INTE FÄRDIGT MÅSTE JOBBA PÅ VIDARE
-//    public List<Transfer> getOtherHotPlayers(String clubname) {
-//        List<Transfer> transfers = transferDAO.findByClub(clubname);
-//        System.out.println("sort transfers");
-//        Collections.sort(transfers, new DonationComparator());        
-//        System.out.println("map player-transfer");
-//        Map<String, Float> hotTransfers = new HashMap<>();
-//        Players player;
-//        for (int i = 0; i < 5; i++) {
-//            hotTransfers.put(transfers.get(i).getPlayerid().getPlayername(), transfers.get(i).getAllDonations());
-//        } 
-//        return hotTransfers;
-//    }
     
-    public List<Transfer> getOtherHotPlayers(String clubname) {
+    public List<Transfer> getHotTransfersToClub(String clubname) {
         List<Transfer> transfers = transferDAO.findByClub(clubname);
         Collections.sort(transfers, new DonationComparator());
         Collections.reverse(transfers);
@@ -126,5 +113,28 @@ public class Controller {
             hotTransfers.add(transfers.get(i));
         }
         return hotTransfers;
+    }
+    
+    public List<Transfer> getHotTransfersFromClub(String clubname) {
+        List<Players> players = playerDAO.findByClub(clubname);
+        List<Transfer> transfers = transferDAO.findAll();
+        List<Transfer> hotTransfers = new ArrayList<>();
+        
+        for(Transfer t: transfers) {
+            for(Players p: players) {
+                if (t.getPlayerid().getIdplayers() == p.getIdplayers()) {
+                    hotTransfers.add(t);
+                }
+            }
+        }
+        return hotTransfers;
+    }
+    
+    public Players getPlayer(String player) {
+        return playerDAO.findByName(player);
+    }
+    
+    public List<Transfer> getHotTranfersPerPlayer(Players player) {
+        return transferDAO.findByPlayer(player);
     }
 }

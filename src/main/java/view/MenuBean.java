@@ -27,7 +27,17 @@ public class MenuBean implements Serializable{
     Controller controller;
     
     private String club;
-
+    
+//    private String player;
+//    
+//    public String getPlayer() {
+//        return player;
+//    }
+//    
+//    public void setPlayer(String player) {
+//        this.player = player;
+//    }
+ 
     public String getClub() {
         return club;
     }
@@ -43,8 +53,5 @@ public class MenuBean implements Serializable{
         return controller.getAllClubs();
     }
     
-    public void test() {
-        System.out.println("Test metod: " + club);
-    }
 
 }

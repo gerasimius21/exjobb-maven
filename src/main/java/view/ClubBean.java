@@ -7,19 +7,23 @@
 package view;
 
 import controller.Controller;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import model.Clubs;
 import model.Players;
 import model.Transfer;
+import org.primefaces.event.SelectEvent;
 
 @Named("clubBean")
-@RequestScoped
+@ViewScoped
 public class ClubBean implements Serializable {
 
     @EJB
@@ -35,6 +39,7 @@ public class ClubBean implements Serializable {
     
     @Inject
     MenuBean mb;
+
       
     
     @PostConstruct
@@ -43,6 +48,10 @@ public class ClubBean implements Serializable {
         clubs = controller.getClubs().findAll();
         clubPlayers = controller.getPlayers().findByClub(mb.getClub());
 
+    }
+    
+    public void onRowSelect(SelectEvent event) throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().redirect("playerView.jsf?selectedPlayer=" + selectedPlayer.getPlayername());    
     }
 
     public List<Clubs> getClubs() {
@@ -53,8 +62,12 @@ public class ClubBean implements Serializable {
         return clubPlayers;
     } 
     
-    public List<Transfer> getOtherHotTransfers() {
-        return controller.getOtherHotPlayers(mb.getClub());
+    public List<Transfer> getHotTranfersToClub() {
+        return controller.getHotTransfersToClub(mb.getClub());
+    }
+    
+    public List<Transfer> getHotTransfersFromClub() {
+        return controller.getHotTransfersFromClub(mb.getClub());
     }
     
     public Clubs getSelectedClub() {

@@ -14,22 +14,64 @@
 
             <ui:define name="content">
 
-                <div style="padding-top: 40px; float: left; width: 350px; height: 500px; margin-left: 120px; font-size: 14px">
-                    <p:panel header="Player Name" style="height: 250px">
+                <div style="padding-top: 40px; float: left; width: 350px; height: 350px; margin-left: 120px; font-size: 14px">
+                    <p:panel header="Player Name" style="height: 300px">
                         <h:graphicImage width="133" height="170" value="images/unknown.png"/>
                     </p:panel>
                 </div>
 
-                <div align="left" style="padding-top: 40px; float: right; width: 350px; height: 500px; margin-right: 120px; font-size: 14px">
-                    
-                    <p:panel header="Player Info" style="height: 250px">
-                        <h:outputText value="Name: [SOME NAME]"></h:outputText><br/>
-                        <h:outputText value="Age: [SOME AGE]"></h:outputText><br/>
-                        <h:outputText value="Jersy#: [SOME #]"></h:outputText><br/>
-                        <h:outputText value="Yellow Cards: [SOME #]"></h:outputText><br/>
-                        <h:outputText value="Red Cards: [SOME #]"></h:outputText><br/>
-                        <h:outputText value="Games Played: [SOME #]"></h:outputText><br/>
-                        <h:outputText value="Goals: [SOME #]"></h:outputText><br/>
+                <div align="left" style="padding-top: 40px; float: right; width: 350px; height: 350px; margin-right: 120px; font-size: 14px">
+
+                    <p:panel header="Player Info" style="height: 300px">
+                        <h:outputText value="Name: "></h:outputText>
+                        <h:outputText value="#{playerBean.player.playername}"></h:outputText><br/>
+                        <h:outputText value="Position: "></h:outputText>
+                        <h:outputText value="#{playerBean.player.position}"></h:outputText><br/>
+                        <h:outputText value="Jersy#: "></h:outputText>
+                        <h:outputText value="#{playerBean.player.jerseynumber}"></h:outputText><br/>
+                        <h:outputText value="Yellow Cards: "></h:outputText>
+                        <h:outputText value="#{playerBean.player.yellowcards}"></h:outputText><br/>
+                        <h:outputText value="Red Cards: "></h:outputText>
+                        <h:outputText value="#{playerBean.player.redcards}"></h:outputText><br/>
+                        <h:outputText value="Games Played: "></h:outputText>
+                        <h:outputText value="#{playerBean.player.gamesplayed}"></h:outputText><br/>
+                        <h:outputText value="Goals: "></h:outputText>
+                        <h:outputText value="#{playerBean.player.goalsscored}"></h:outputText><br/>
+                    </p:panel>
+                </div>
+
+                <div align="left" style=" float: left; width: 350px; height: 500px; margin-left: 120px; font-size: 14px">
+                    <p:panel header="Hottest Transfers" style="height: 300px">
+                        <p:dataTable id="transfers" var="hTransfers" value="#{playerBean.hotTransfers}" tableStyle="width:auto">
+                            <p:column headerText="Player">
+                                <h:outputText value="#{hTransfers.playerid.playername}"/>
+                            </p:column>
+                            <p:column headerText="To Club">
+                                <h:outputText value="#{hTransfers.clubid.clubname}"/>
+                            </p:column>
+                            <p:column headerText="Current Donations">
+                                <h:outputText value="#{hTransfers.allDonations}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+                </div>
+
+                <div align="left" style=" float: right; width: 350px; height: 500px; margin-right: 120px; font-size: 14px">
+                    <p:panel header="Hottest Donations" style="height: 300px">
+                        <p:dataTable id="donations" var="hDonations" value="" tableStyle="width:auto">
+                            <p:column headerText="Supporter">
+                                <h:outputText value=""/>
+                            </p:column>
+                            <p:column headerText="Player">
+                                <h:outputText value=""/>
+                            </p:column>
+                            <p:column headerText="To Club">
+                                <h:outputText value=""/>
+                            </p:column>
+                            <p:column headerText="Donation">
+                                <h:outputText value=""/>
+                            </p:column>
+                        </p:dataTable>
                     </p:panel>
                 </div>
             </ui:define>
