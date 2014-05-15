@@ -83,7 +83,7 @@ public class TransferBean implements Serializable {
             Collection<Donation> c = this.selectedTransfers.get(i).getDonationCollection();
             System.out.println("Size of collection for " + selectedTransfers.get(i).getPlayerid().getPlayername() + ": " + c.size());
             for (Donation d : c) {
-                executePayment(d.getPpkey(), d.getAmount());
+                executePayment(d.getPpkey(), d.getAmount(), this.selectedTransfers.get(i));
                 System.out.println("Compleating transaction for ppk: " + d.getPpkey());
             }
             System.out.println("Removing transfer with player: " + selectedTransfers.get(i).getPlayerid().getPlayername() 
@@ -93,7 +93,7 @@ public class TransferBean implements Serializable {
 
     }
 
-    public void executePayment(String ppk, double amount) throws Exception {
+    public void executePayment(String ppk, double amount, Transfer transfer) throws Exception {
         payRequest = new PayRequest();
         List<Receiver> receivers = new ArrayList<>();
 
@@ -106,7 +106,7 @@ public class TransferBean implements Serializable {
         secondary = new Receiver();
         Double d = (amount * 0.95);
         secondary.setAmount(roundByTwo(d));
-        secondary.setEmail("club21@club.com");
+        secondary.setEmail(transfer.getClubid().getEmail());
         receivers.add(secondary);
 
         ReceiverList receiverList = new ReceiverList(receivers);

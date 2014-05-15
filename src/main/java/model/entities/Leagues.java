@@ -9,6 +9,7 @@ package model.entities;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -51,7 +52,7 @@ public class Leagues implements Serializable {
     @JoinColumn(name = "landid", referencedColumnName = "idlands")
     @ManyToOne
     private Lands landid;
-    @OneToMany(mappedBy = "leagueid")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "leagueid")
     private Collection<Clubs> clubsCollection;
 
     public Leagues() {

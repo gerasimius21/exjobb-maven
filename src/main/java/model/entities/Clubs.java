@@ -20,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -34,7 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Clubs.findAll", query = "SELECT c FROM Clubs c"),
     @NamedQuery(name = "Clubs.findByIdclubs", query = "SELECT c FROM Clubs c WHERE c.idclubs = :idclubs"),
-    @NamedQuery(name = "Clubs.findByClubname", query = "SELECT c FROM Clubs c WHERE c.clubname = :clubname")})
+    @NamedQuery(name = "Clubs.findByClubname", query = "SELECT c FROM Clubs c WHERE c.clubname = :clubname"),
+    @NamedQuery(name = "Clubs.findByEmail", query = "SELECT c FROM Clubs c WHERE c.email = :email")})
 public class Clubs implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,15 +44,23 @@ public class Clubs implements Serializable {
     @Basic(optional = false)
     @Column(name = "idclubs")
     private Integer idclubs;
-    @Size(max = 45)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "clubname")
     private String clubname;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "email")
+    private String email;
     @OneToMany(mappedBy = "clubid")
     private Collection<Transfer> transferCollection;
     @OneToMany(mappedBy = "clubid")
     private Collection<Players> playersCollection;
     @JoinColumn(name = "leagueid", referencedColumnName = "idleagues")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Leagues leagueid;
 
     public Clubs() {
@@ -58,6 +68,12 @@ public class Clubs implements Serializable {
 
     public Clubs(Integer idclubs) {
         this.idclubs = idclubs;
+    }
+
+    public Clubs(Integer idclubs, String clubname, String email) {
+        this.idclubs = idclubs;
+        this.clubname = clubname;
+        this.email = email;
     }
 
     public Integer getIdclubs() {
@@ -74,6 +90,14 @@ public class Clubs implements Serializable {
 
     public void setClubname(String clubname) {
         this.clubname = clubname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @XmlTransient

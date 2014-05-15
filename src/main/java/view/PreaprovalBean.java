@@ -46,12 +46,6 @@ public class PreaprovalBean {
     private PreapprovalRequest preRequest;
     private PreapprovalResponse preResponse;
 
-    private PayRequest payRequest;
-    private PayResponse payResponse;
-
-    private Receiver primary;
-    private Receiver secondary;
-
     private TransferDTO transferDTO;
     private DonationDTO donationDTO;
 
