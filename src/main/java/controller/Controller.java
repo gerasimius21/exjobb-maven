@@ -58,8 +58,8 @@ public class Controller {
         return playerDAO;
     }
 
-    public ClubsDAO getClubs() {
-        return clubDAO;
+    public List<Clubs> getAllClubs() {
+        return clubDAO.findAll();
     }
 
     public List getAllClubsPerLeague(String league) {

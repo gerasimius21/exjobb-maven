@@ -26,56 +26,62 @@ import org.primefaces.event.SelectEvent;
 public class ClubBean implements Serializable {
 
     @EJB
-    private Controller controller;
-    
+    Controller controller;
     private List<Players> clubPlayers;
     private Players selectedPlayer;
-    
+
     private List<Clubs> clubs;
     private Clubs selectedClub;
 
 //    private List clubHotPlayers;
-    
     @Inject
     MenuBean mb;
 
-      
+    @Inject
+    MoveTextBean mtb;
+
+    @Inject
+    ClubListBean clb;
     
     @PostConstruct
     public void init() {
         System.out.println("Club: " + mb.getClub());
-        clubs = controller.getClubs().findAll();
+        clubs = controller.getAllClubs();
         clubPlayers = controller.getPlayers().findByClub(mb.getClub());
+        
     }
-    
+
     public void onRowSelect(SelectEvent event) throws IOException {
-        FacesContext.getCurrentInstance().getExternalContext().redirect("playerView.jsf?selectedPlayer=" + selectedPlayer.getPlayername());    
+        mtb.setPlayerName(selectedPlayer.getPlayername());
+        clb.getClubList().remove(selectedPlayer.getClubid());
+        FacesContext.getCurrentInstance().getExternalContext().redirect("playerView.jsf?selectedPlayer=" + selectedPlayer.getPlayername());
+        
     }
 
     public List<Clubs> getClubs() {
         return clubs;
     }
-      
-    public List<Players> getPlayers() {  
+
+    public List<Players> getPlayers() {
         return clubPlayers;
-    } 
-    
+    }
+
     public List<Transfer> getHotTranfersToClub() {
         return controller.getHotTransfersToClub(mb.getClub());
     }
-    
+
     public List<Transfer> getHotTransfersFromClub() {
         return controller.getHotTransfersFromClub(mb.getClub());
     }
-    
+
     public Clubs getSelectedClub() {
         return selectedClub;
     }
-    
+
     public void setSelectedClub(Clubs selectedClub) {
         this.selectedClub = selectedClub;
     }
-    
+
     public Players getSelectedPlayer() {
         return selectedPlayer;
     }
@@ -85,6 +91,5 @@ public class ClubBean implements Serializable {
         System.out.println("setSelectedPlayer clubBean: " + this.selectedPlayer);
         clubs.remove(this.selectedPlayer.getClubid());
     }
-    
 
 }

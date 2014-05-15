@@ -21,10 +21,22 @@
 
 
                 <h:form style="padding-top: 2px"> 
-                    Player : <h:inputText />
-                    Team : <h:inputText /> 
-                    Amount : <h:inputText /> 
-                    <h:commandButton value="Donate"></h:commandButton> 
+                    Player : 
+                    <h:inputText value="#{movetextBean.playerName}">
+
+                    </h:inputText>
+                    Team : 
+                    <h:selectOneMenu value="#{movetextBean.selectedClub}" converter="clubConverter">
+                        <f:selectItems value="#{clubListBean.clubList}" var="selectedClub" itemValue="#{selectedClub}" itemLabel="#{selectedClub.clubname}"/>
+                    </h:selectOneMenu>
+
+                    Amount :
+<!--                    <h:outputLabel for="prefix" value="Prefix: " />
+                    <p:spinner id="prefix" value="#{preBean.amount}" prefix="$" min="0" styleClass="someStyle"/>-->
+                    
+                    <h:inputText value="#{preBean.amount}" /> 
+                    
+                    <h:commandButton value="Donate" action="#{preBean.preapprove()}"></h:commandButton> 
                 </h:form>                 
 
 

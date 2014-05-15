@@ -25,7 +25,13 @@ public class PlayersDAO implements PlayersDAOInterface {
 
     @Override
     public void addPlayer(Players player) {
+        System.out.println("Persisting player" + player.getPlayername());
+
+        // persist object - add to entity manager
         em.persist(player);
+        em.flush();
+
+
     }
 
     @Override
@@ -35,32 +41,41 @@ public class PlayersDAO implements PlayersDAOInterface {
     }
 
     @Override
-    public Players findByID(int id) {
+    public Players
+            findByID(int id) {
         return em.find(Players.class, id);
     }
 
     @Override
     public List<Players> findByClub(String clubname) {
-        Clubs club = (Clubs)em.createNamedQuery("Clubs.findByClubname", Clubs.class)
+        Clubs club = (Clubs) em.createNamedQuery("Clubs.findByClubname", Clubs.class
+        )
                 .setParameter("clubname", clubname).getSingleResult();
 
         System.out.println(club);
         int clubId = club.getIdclubs();
+
         System.out.println(clubId);
-        return em.createQuery("SELECT p FROM Players p WHERE p.clubid.idclubs = ?1").setParameter(1, clubId).getResultList();
+
+        return em.createQuery(
+                "SELECT p FROM Players p WHERE p.clubid.idclubs = ?1").setParameter(1, clubId).getResultList();
     }
 
     @Override
     public List<Players> findAll() {
         TypedQuery<Players> query = em.createQuery(
-                "SELECT g FROM Clubs g", Players.class);
+                "SELECT g FROM Clubs g", Players.class
+        );
         return query.getResultList();
     }
 
-    public Players findByName(String playerName) {
-        TypedQuery getPlayerByName = em.createNamedQuery("Players.findByPlayername", Players.class);
-        getPlayerByName.setParameter("playername", playerName);
-        return (Players)getPlayerByName.getSingleResult();
+    public Players
+            findByName(String playerName) {
+        TypedQuery getPlayerByName = em.createNamedQuery("Players.findByPlayername", Players.class
+        );
+        getPlayerByName.setParameter(
+                "playername", playerName);
+        return (Players) getPlayerByName.getSingleResult();
     }
     
     public List<Players> findByLeague(String league) {

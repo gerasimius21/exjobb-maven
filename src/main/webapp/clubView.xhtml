@@ -14,7 +14,7 @@
 
             <ui:define name="content">
 
-                <div style="padding-top: 40px; float: left; width: 350px; height: 350px; margin-left: 120px; font-size: 14px">
+                <div style="padding-top: 40px; float: left; width: 350px; height: 350px; margin-left: 120px">
                     <p:panel header="Club Name" style="height: 300px">
                         <h:graphicImage width="133" height="170" value="images/unknown.png"/>
                     </p:panel>
@@ -25,9 +25,11 @@
                         <p:scrollPanel mode="native" >
                             <h:form id="club">
                                 <p:dataTable id="clubTable" var="player" value="#{clubBean.players}" rowKey="#{player.jerseynumber}" selectionMode="single" 
-                                             selection="#{clubBean.selectedPlayer}" >  
+                                             selection="#{clubBean.selectedPlayer}" >
+                                    
+<!--                                    <p:ajax event="rowSelect" update=":form:display" oncomplete="clubDialog.show()" /> -->
                                     <p:ajax event="rowSelect"  listener="#{clubBean.onRowSelect}">
-        <!--                                    <f:setPropertyActionListener target="#{playerBean.selectedPlayer}" value="#{clubBean.selectedPlayer.playername}"/>-->
+                                            <f:setPropertyActionListener target="#{playerBean.selectedPlayer}" value="#{clubBean.selectedPlayer.playername}"/>
                                     </p:ajax> 
                                     <p:column headerText="Player">  
                                         <h:outputText value="#{player.jerseynumber}" />
@@ -52,28 +54,23 @@
                                 </p:dataTable>  
 
                                 <p:dialog header="Player transfer" widgetVar="clubDialog" resizable="false"  
-                                          width="200">  
-                                    <h:panelGrid id="display" columns="2" cellpadding="4">   
-                                        <h:outputText value="Player:" />  
-                                        <h:outputText value="#{clubBean.selectedPlayer.playername}" id="name"/>  
-                                        <h:outputText value="to club:" />  
-                                        <h:selectOneMenu value="#{clubBean.selectedClub}" converter="clubConverter">
-                                            <f:selectItems value="#{clubBean.clubs}" var="selectedClub" itemValue="#{selectedClub}" itemLabel="#{selectedClub.clubname}"/>
-                                        </h:selectOneMenu>
-                                        <h:outputLabel for="number" value="Amount:" style="font-weight:bold"/>                      
-                                        <h:inputText id="number" value="#{preBean.amount}" label="Number">  
-
-                                            <f:validateDoubleRange minimum="1" maximum="12" /> 
-                                        </h:inputText>
-                                        <p:panel header="Masks">
-                                            <h:panelGrid columns="2" cellpadding="5">
-                                                <p:inputMask value="#{maskController.date}" mask="99/99/9999"/>
-                                            </h:panelGrid>
-                                        </p:panel>
-                                    </h:panelGrid>  
-                                    <h:commandButton value=" " action="#{preBean.preapprove()}" style="background-image: url(./images/paynow.gif) ; width: 107px; height: 26px"  >
-                                    </h:commandButton>
-                                </p:dialog>
+                                      width="200">  
+                                <h:panelGrid id="display" columns="2" cellpadding="4">   
+                                    <h:outputText value="Player:" />  
+                                    <h:outputText value="#{clubBean.selectedPlayer.playername}" id="name"/>  
+                                    <h:outputText value="to club:" />  
+                                    <h:selectOneMenu value="#{clubBean.selectedClub}" converter="clubConverter">
+                                        <f:selectItems value="#{clubBean.clubs}" var="selectedClub" itemValue="#{selectedClub}" itemLabel="#{selectedClub.clubname}"/>
+                                    </h:selectOneMenu>
+                                    <h:outputLabel for="number" value="Amount:" style="font-weight:bold"/>                      
+                                    <h:inputText id="number" value="#{preBean.amount}" label="Number">  
+                                        <f:convertNumber currencyCode="EUR" type="currency"/>
+                                        <!--                                <f:validateDoubleRange minimum="1" maximum="12" />  -->
+                                    </h:inputText>  
+                                </h:panelGrid>  
+                                <h:commandButton value=" " action="#{preBean.preapprove()}" style="background-image: url(./images/paynow.gif) ; width: 107px; height: 26px"  >
+                                </h:commandButton>
+                            </p:dialog>
                             </h:form> 
                         </p:scrollPanel>
                     </p:panel>
@@ -97,7 +94,7 @@
                     </p:panel>
                 </div>
                 <div align="left" style="float: right; width: 350px; height: 500px; margin-right: 120px; font-size: 10px">
-                    <p:panel header="Hot Transfers From Club" style="height: 300">
+                    <p:panel header="Hot Transfers From Club" style="height: 300px">
                         <p:dataTable id="clubPlayers" var="cTransfers" value="#{clubBean.hotTransfersFromClub}">
                             <!--                            <f:facet name="header">
                                                             Hot Transfers From Club
