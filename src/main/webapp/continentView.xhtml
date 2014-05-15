@@ -24,9 +24,9 @@
                             </p:submenu>
                         </p:panelMenu>
                     </div>-->
-                    <div align="left" style=" float: left; width: 350px; height: 500px; margin-left: 120px; font-size: 10px">
+                    <div align="left" style=" float: left; width: 350px; height: 500px; margin-left: 25px; font-size: 10px; margin-top: 25px">
                         <p:panel header="Hot Transfers To Continent" style="height: 300px">
-                            <p:dataTable id="transfers" var="toTransfers" value="#{continentBean.hotTransfersToContinent}" tableStyle="width:auto">
+                            <p:dataTable id="transfers" var="toTransfers" value="#{continentBean.hotTransfersToContinent}" tableStyle="width:322px">
                                 <p:column headerText="Player">
                                     <h:outputText value="#{toTransfers.playerid.playername}"/>
                                 </p:column>
@@ -40,9 +40,9 @@
                         </p:panel>
                     </div>
 
-                    <div align="left" style=" float: right; width: 350px; height: 500px; margin-right: 120px; font-size: 10px">
+                    <div align="left" style=" float: right; width: 350px; height: 500px; margin-right: 25px; font-size: 10px; margin-top: 25px">
                         <p:panel header="Hot Transfers From Continent" style="height: 300px">
-                            <p:dataTable id="donations" var="fromTransfers" value="#{continentBean.hotTransfersFromContinent}" tableStyle="width:auto">
+                            <p:dataTable id="donations" var="fromTransfers" value="#{continentBean.hotTransfersFromContinent}" tableStyle="width:322px">
                                 <p:column headerText="Player">
                                     <h:outputText value="#{fromTransfers.playerid.playername}"/>
                                 </p:column>

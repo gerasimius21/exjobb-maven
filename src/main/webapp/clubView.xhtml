@@ -14,13 +14,13 @@
 
             <ui:define name="content">
 
-                <div style="padding-top: 40px; float: left; width: 350px; height: 350px; margin-left: 120px">
+                <div style="float: left; width: 350px; height: 350px; margin-left: 25px; margin-top: 25px">
                     <p:panel header="Club Name" style="height: 300px">
                         <h:graphicImage width="133" height="170" value="images/unknown.png"/>
                     </p:panel>
                 </div>
 
-                <div align="left" style=" padding-top: 40px; float: right; width: 350px; height: 350px; margin-right: 120px; font-size: 10px">
+                <div align="left" style="float: right; width: 350px; height: 350px; margin-right: 25px; margin-top: 25px; font-size: 10px">
                     <p:panel header="Club Squad" style="height: 300px">
                         <p:scrollPanel mode="native" >
                             <h:form id="club">
@@ -75,7 +75,8 @@
                         </p:scrollPanel>
                     </p:panel>
                 </div>
-                <div align="left" style="float: left; width: 350px; height: 500px; margin-left: 120px; font-size: 10px">
+                
+                <div align="left" style="float: left; width: 350px; height: 500px; margin-left: 25px; font-size: 10px">
                     <p:panel header="Hot Transfers To Club" style="height: 300px">
                         <p:dataTable id="otherPlayers"  var="oTransfers" value="#{clubBean.hotTranfersToClub}">
                             <!--                            <f:facet name="header">
@@ -92,8 +93,10 @@
                             </p:column>
                         </p:dataTable>
                     </p:panel>
+                
                 </div>
-                <div align="left" style="float: right; width: 350px; height: 500px; margin-right: 120px; font-size: 10px">
+                
+                <div align="left" style="float: right; width: 350px; height: 500px; margin-right: 25px; font-size: 10px">
                     <p:panel header="Hot Transfers From Club" style="height: 300px">
                         <p:dataTable id="clubPlayers" var="cTransfers" value="#{clubBean.hotTransfersFromClub}">
                             <!--                            <f:facet name="header">

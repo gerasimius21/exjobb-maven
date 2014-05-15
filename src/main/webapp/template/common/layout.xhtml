@@ -13,12 +13,12 @@
         <script src="js/jquery-ui-1.10.4.custom.js"></script>
         <!--        <h:outputScript library="primefaces" name="./js/jquery.js" />-->
         <script>
-            $(document).ready(function(){ 
-                $(".ui-panelmenu-content").css("display","block"); //shows the menuitems 
+            $(document).ready(function() {
+                $(".ui-panelmenu-content").css("display", "block"); //shows the menuitems 
                 $(".ui-panelmenu-header").addClass("ui-state-active"); //sets the submenu header to active state 
                 $(".ui-icon-triangle-1-e").removeClass("ui-icon-triangle-1-e").addClass("ui-icon-triangle-1-s"); //sets the triangle icon to "expaned" state 
-             });
-                $(function() {
+            });
+            $(function() {
 
                 $("#accordion").accordion();
 
@@ -182,22 +182,28 @@
             </div>
 
             <div id="whiteback" ></div>
-            
-            <div id="menu">
-                <ui:insert name="menu">
-                    <ui:include src="/template/common/menu.xhtml" />
-                </ui:insert>
+
+            <div style="width: 960px"> 
+
+                <div id="menu" style="width: 150px;
+                     float: left;">
+                    <ui:insert name="menu">
+                        <ui:include src="/template/common/menu.xhtml" />
+                    </ui:insert>
+                </div>
+
+                <div id="content" style="width: 810px; float: right">
+                    <ui:insert name="content" >
+                        <ui:include src="/template/common/content.xhtml" />
+                    </ui:insert>
+                </div>
+
             </div>
 
-            <div id="content" style="width: 960px;">
-                <ui:insert name="content" >
-                    <ui:include src="/template/common/content.xhtml" />
-                </ui:insert>
-            </div>
-
-            <div id="footer" style="padding-bottom: -10px;
-                 left: 0;
-                 right: 0;">
+            <div id="footer" style="left: 0;
+                 position: fixed;
+                 right: 0;
+                 bottom: 20px;">
                 <ui:insert name="footer" >
                     <ui:include src="/template/common/footer.xhtml" />
                 </ui:insert>
