@@ -6,6 +6,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -80,6 +81,9 @@ public class Controller {
     public void saveTransaction(TransferDTO transferDTO, DonationDTO donationDTO) {
         Transfer transfer = new Transfer();
         List<Transfer> transfers = transferDAO.findAll();
+        if (transfers.isEmpty()) {
+            transfer = null;
+        }
         for (Transfer t : transfers) {
             System.out.println("DATABASE clubid = " + t.getClubid() + " playerid = " + t.getPlayerid());
             System.out.println("TRANSFER clubid = " + transferDTO.getClub().getIdclubs() + " playerid = " + transferDTO.getPlayer().getIdplayers());
@@ -170,6 +174,7 @@ public class Controller {
         return sortTransfers(getAllTransfers());
     }
 
+
     public Players getPlayer(String player) {
         return playerDAO.findByName(player);
     }
@@ -185,6 +190,18 @@ public class Controller {
             transfers = transfers.subList(0, 4);
         }
         return transfers;
+    }
+
+    public void addPlayerToDB(Players player) {
+        playerDAO.addPlayer(player);
+    }
+
+    public void removeDonations(String ppk) {
+        donationDAO.removeDonation(donationDAO.findByPPK(ppk));
+    }
+    
+    public void removeTransfer(Transfer t){
+        transferDAO.removeTransfer(t);
     }
 
 }
