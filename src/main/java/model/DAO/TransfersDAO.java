@@ -38,7 +38,7 @@ public class TransfersDAO implements TransfersDAOInterface {
 
     @Override
     public void removeTransfer(Transfer transfer) {
-        em.merge(transfer);
+        transfer = em.merge(transfer);
         em.remove(transfer);
     }
 

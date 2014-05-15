@@ -29,7 +29,7 @@ public class DonationsDAO implements DonationsDAOInterface {
 
     @Override
     public void removeDonation(Donation donation) {
-        em.merge(donation);
+        donation = em.merge(donation);
         em.remove(donation);
     }
 
@@ -43,6 +43,10 @@ public class DonationsDAO implements DonationsDAOInterface {
         TypedQuery<Donation> query = em.createQuery(
                 "SELECT g FROM Donation g", Donation.class);
         return query.getResultList();
+    }
+
+    public Donation findByPPK(String ppk) {
+        return (Donation) em.createQuery("SELECT d FROM Donation d WHERE d.ppkey = ?1").setParameter(1, ppk).getSingleResult();
     }
 
 }

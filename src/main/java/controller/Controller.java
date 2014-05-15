@@ -6,6 +6,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -58,6 +59,9 @@ public class Controller {
     public void saveTransaction(TransferDTO transferDTO, DonationDTO donationDTO) {
         Transfer transfer = new Transfer();
         List<Transfer> transfers = transferDAO.findAll();
+        if (transfers.isEmpty()) {
+            transfer = null;
+        }
         for (Transfer t : transfers) {
             System.out.println("DATABASE clubid = " + t.getClubid() + " playerid = " + t.getPlayerid());
             System.out.println("TRANSFER clubid = " + transferDTO.getClub().getIdclubs() + " playerid = " + transferDTO.getPlayer().getIdplayers());
@@ -83,11 +87,11 @@ public class Controller {
         } else {
             System.out.println("Transfer exists saving donation" + transfer);
             transfer = transferDAO.findByClubAndPlayer(transferDTO.getClub(), transferDTO.getPlayer());
-            float sum = transfer.getAllDonations() + (float)donationDTO.getAmount();
+            float sum = transfer.getAllDonations() + (float) donationDTO.getAmount();
             transfer.setAllDonations(sum);
             saveDonation(donationDTO, transfer);
         }
-        
+
     }
 
     private void saveDonation(DonationDTO donationDTO, Transfer transfer) {
@@ -98,30 +102,32 @@ public class Controller {
         donation.setTransferid(transfer);
         donationDAO.addDonation(donation);
     }
-    
-    public List<Transfer> getAllTransfers(){
+
+    public List<Transfer> getAllTransfers() {
         System.out.println("From controller number of transfers: " + transferDAO.findAll().size());
         return transferDAO.findAll();
     }
-    
+
     public List<Transfer> getHotTransfersToClub(String clubname) {
         List<Transfer> transfers = transferDAO.findByClub(clubname);
         Collections.sort(transfers, new DonationComparator());
         Collections.reverse(transfers);
         List<Transfer> hotTransfers = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            hotTransfers.add(transfers.get(i));
+        if (transfers.size() > 5) {
+            for (int i = 0; i < 5; i++) {
+                hotTransfers.add(transfers.get(i));
+            }
         }
         return hotTransfers;
     }
-    
+
     public List<Transfer> getHotTransfersFromClub(String clubname) {
         List<Players> players = playerDAO.findByClub(clubname);
         List<Transfer> transfers = transferDAO.findAll();
         List<Transfer> hotTransfers = new ArrayList<>();
-        
-        for(Transfer t: transfers) {
-            for(Players p: players) {
+
+        for (Transfer t : transfers) {
+            for (Players p : players) {
                 if (t.getPlayerid().getIdplayers() == p.getIdplayers()) {
                     hotTransfers.add(t);
                 }
@@ -129,12 +135,24 @@ public class Controller {
         }
         return hotTransfers;
     }
-    
+
     public Players getPlayer(String player) {
         return playerDAO.findByName(player);
     }
-    
+
     public List<Transfer> getHotTranfersPerPlayer(Players player) {
         return transferDAO.findByPlayer(player);
+    }
+
+    public void addPlayerToDB(Players player) {
+        playerDAO.addPlayer(player);
+    }
+
+    public void removeDonations(String ppk) {
+        donationDAO.removeDonation(donationDAO.findByPPK(ppk));
+    }
+    
+    public void removeTransfer(Transfer t){
+        transferDAO.removeTransfer(t);
     }
 }

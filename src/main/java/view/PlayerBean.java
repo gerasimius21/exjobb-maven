@@ -3,16 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package view;
 
 import controller.Controller;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -30,10 +32,25 @@ public class PlayerBean implements Serializable {
 
     @EJB
     Controller controller;
-  
+
+    @Inject
+    ClubListBean clb;
+    
+    @Inject
+    MoveTextBean mtb;
+
     String selectedPlayer;
     Players player;
-    
+
+    private UIComponent component;
+
+    public UIComponent getComponent() {
+        return component;
+    }
+
+    public void setComponent(UIComponent component) {
+        this.component = component;
+    }
 
     public List<Transfer> getHotTransfers() {
         return controller.getHotTranfersPerPlayer(player);
@@ -44,6 +61,15 @@ public class PlayerBean implements Serializable {
         selectedPlayer = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("selectedPlayer");
         System.out.println("INIT " + selectedPlayer);
         player = controller.getPlayer(selectedPlayer);
+
+        if (clb.getClubList().equals(controller.getAllClubs())) {
+
+        } else {
+            clb.setClubList(controller.getAllClubs());
+        }
+        
+        mtb.setPlayerName("");
+
     }
 
     public String getSelectedPlayer() {
@@ -51,9 +77,10 @@ public class PlayerBean implements Serializable {
     }
 
     public void setSelectedPlayer(String selectedPlayer) {
+
         this.selectedPlayer = selectedPlayer;
     }
-    
+
     public Players getPlayer() {
         return player;
     }
@@ -61,5 +88,13 @@ public class PlayerBean implements Serializable {
     public void setPlayer(Players player) {
         this.player = player;
     }
-    
+
+    public String donatePrep() {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        context.addMessage(component.getClientId(), new FacesMessage("Test msg"));
+
+        return "";
+    }
+
 }

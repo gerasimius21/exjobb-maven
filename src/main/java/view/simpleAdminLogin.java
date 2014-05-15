@@ -6,6 +6,7 @@
 package view;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**

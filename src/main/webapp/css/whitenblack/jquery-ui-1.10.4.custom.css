@@ -6,6 +6,10 @@
 
 /* Layout helpers
 ----------------------------------*/
+.someStyle{
+    background: white;
+}
+
 .ui-watermark {
 	color: #eeeeee !important;
 	font-weight: normal !important;

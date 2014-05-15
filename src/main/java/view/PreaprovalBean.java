@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -37,9 +38,9 @@ import model.DTO.TransferDTO;
 public class PreaprovalBean {
 
     @Inject
-    ClubBean club;
+    MoveTextBean mtb;
 
-    @Inject
+    @EJB
     Controller controller;
 
     private PreapprovalRequest preRequest;
@@ -53,7 +54,7 @@ public class PreaprovalBean {
 
     private TransferDTO transferDTO;
     private DonationDTO donationDTO;
-    
+
     private Double amount;
 
     public void preapprove() throws Exception {
@@ -66,10 +67,10 @@ public class PreaprovalBean {
         preRequest.setCurrencyCode("EUR");
         preRequest.setIpnNotificationUrl("http://replaceIpnUrl.com");
         preRequest.setStartingDate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-        preRequest.setEndingDate("2014-05-30");
+        preRequest.setEndingDate("2014-06-30");
         preRequest.setMaxNumberOfPayments(1);
 
-        System.out.println(club.getSelectedClub().getClubname());
+        System.out.println(mtb.getSelectedClub().getClubname());
         System.out.println(amount);
 
         preRequest.setMaxTotalAmountOfAllPayments(amount);
@@ -98,53 +99,52 @@ public class PreaprovalBean {
 
     }
 
-    public void executePayment() throws Exception {
-        payRequest = new PayRequest();
-        List<Receiver> receivers = new ArrayList<>();
-        
-        primary = new Receiver();
-        primary.setAmount(amount);
-        primary.setEmail("miketa.bogdanovic-facilitator@gmail.com");
-        primary.setPrimary(Boolean.TRUE);
-        receivers.add(primary);
-
-        secondary = new Receiver();
-        Double d = (amount * 0.95);
-        secondary.setAmount((double) (Math.round(d * 100) / 100));
-        secondary.setEmail("club21@club.com");
-        receivers.add(secondary);
-
-        ReceiverList receiverList = new ReceiverList(receivers);
-
-        payRequest.setReceiverList(receiverList);
-        payRequest.setPreapprovalKey(preResponse.getPreapprovalKey());
-        RequestEnvelope requestEnvelope = new RequestEnvelope("en_US");
-        payRequest.setRequestEnvelope(requestEnvelope);
-        payRequest.setActionType("PAY");
-        payRequest.setCancelUrl("https://devtools-paypal.com/guide/ap_preapprove_payment?cancel=true");
-        payRequest.setReturnUrl("http://localhost:8080/sdktest/clubView.jsf");
-        payRequest.setCurrencyCode("EUR");
-        payRequest.setIpnNotificationUrl("http://replaceIpnUrl.com");
-        payRequest.setFeesPayer("SECONDARYONLY");
-
-        Map<String, String> sdkConfig = new HashMap<>();
-        sdkConfig.put("mode", "sandbox");
-        sdkConfig.put("acct1.UserName", "miketa.bogdanovic-facilitator_api1.gmail.com");
-        sdkConfig.put("acct1.Password", "1398705931 ");
-        sdkConfig.put("acct1.Signature", "AiPC9BjkCyDFQXbSkoZcgqH3hpacAwld1cXNDk56uvbJmYoTVW8wxwcl");
-        sdkConfig.put("acct1.AppId", "APP-80W284485P519543T");
-
-        AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService(sdkConfig);
-        payResponse = adaptivePaymentsService.pay(payRequest);
-    }
+//    public void executePayment() throws Exception {
+//        payRequest = new PayRequest();
+//        List<Receiver> receivers = new ArrayList<>();
+//
+//        primary = new Receiver();
+//        primary.setAmount(amount);
+//        primary.setEmail("miketa.bogdanovic-facilitator@gmail.com");
+//        primary.setPrimary(Boolean.TRUE);
+//        receivers.add(primary);
+//
+//        secondary = new Receiver();
+//        Double d = (amount * 0.95);
+//        secondary.setAmount((double) (Math.round(d * 100) / 100));
+//        secondary.setEmail("club21@club.com");
+//        receivers.add(secondary);
+//
+//        ReceiverList receiverList = new ReceiverList(receivers);
+//
+//        payRequest.setReceiverList(receiverList);
+//        payRequest.setPreapprovalKey(preResponse.getPreapprovalKey());
+//        RequestEnvelope requestEnvelope = new RequestEnvelope("en_US");
+//        payRequest.setRequestEnvelope(requestEnvelope);
+//        payRequest.setActionType("PAY");
+//        payRequest.setCancelUrl("https://devtools-paypal.com/guide/ap_preapprove_payment?cancel=true");
+//        payRequest.setReturnUrl("http://localhost:8080/sdktest/clubView.jsf");
+//        payRequest.setCurrencyCode("EUR");
+//        payRequest.setIpnNotificationUrl("http://replaceIpnUrl.com");
+//        payRequest.setFeesPayer("SECONDARYONLY");
+//
+//        Map<String, String> sdkConfig = new HashMap<>();
+//        sdkConfig.put("mode", "sandbox");
+//        sdkConfig.put("acct1.UserName", "miketa.bogdanovic-facilitator_api1.gmail.com");
+//        sdkConfig.put("acct1.Password", "1398705931 ");
+//        sdkConfig.put("acct1.Signature", "AiPC9BjkCyDFQXbSkoZcgqH3hpacAwld1cXNDk56uvbJmYoTVW8wxwcl");
+//        sdkConfig.put("acct1.AppId", "APP-80W284485P519543T");
+//
+//        AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService(sdkConfig);
+//        payResponse = adaptivePaymentsService.pay(payRequest);
+//    }
 
     private void saveTransaction() {
-        transferDTO = new TransferDTO(club.getSelectedClub(), club.getSelectedPlayer());
+        transferDTO = new TransferDTO(mtb.getSelectedClub(), mtb.getSelectedPlayer());
         donationDTO = new DonationDTO(amount, preResponse.getPreapprovalKey());
 
         controller.saveTransaction(transferDTO, donationDTO);
     }
-   
 
     public void setAmount(Double amount) {
         System.out.println("clubBean setAmount" + amount);
