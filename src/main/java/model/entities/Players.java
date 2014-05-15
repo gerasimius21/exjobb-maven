@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package model;
+package model.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -188,7 +188,7 @@ public class Players implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Players[ idplayers=" + idplayers + " ]";
+        return "model.entities.Players[ idplayers=" + idplayers + " ]";
     }
     
 }

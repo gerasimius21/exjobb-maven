@@ -13,7 +13,12 @@
         <script src="js/jquery-ui-1.10.4.custom.js"></script>
         <!--        <h:outputScript library="primefaces" name="./js/jquery.js" />-->
         <script>
-            $(function() {
+            $(document).ready(function(){ 
+                $(".ui-panelmenu-content").css("display","block"); //shows the menuitems 
+                $(".ui-panelmenu-header").addClass("ui-state-active"); //sets the submenu header to active state 
+                $(".ui-icon-triangle-1-e").removeClass("ui-icon-triangle-1-e").addClass("ui-icon-triangle-1-s"); //sets the triangle icon to "expaned" state 
+             });
+                $(function() {
 
                 $("#accordion").accordion();
 
@@ -170,13 +175,19 @@
                 </ui:insert>
             </div>
 
-            <div id="header">
-                <ui:insert name="header" >
+            <div id="transfer">
+                <ui:insert name="transfer" >
                     <ui:include src="/template/common/transfer.xhtml" />
                 </ui:insert>
             </div>
 
             <div id="whiteback" ></div>
+            
+            <div id="menu">
+                <ui:insert name="menu">
+                    <ui:include src="/template/common/menu.xhtml" />
+                </ui:insert>
+            </div>
 
             <div id="content" style="width: 960px;">
                 <ui:insert name="content" >

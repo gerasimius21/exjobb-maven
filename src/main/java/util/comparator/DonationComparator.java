@@ -7,7 +7,7 @@
 package util.comparator;
 
 import java.util.Comparator;
-import model.Transfer;
+import model.entities.Transfer;
 
 /**
  *

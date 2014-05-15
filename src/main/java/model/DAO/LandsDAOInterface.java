@@ -3,21 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package model.DAO;
 
 import java.util.List;
-import model.entities.Transfer;
-
+import model.entities.Lands;
 
 /**
  *
  * @author gerasim
  */
-public interface TransfersDAOInterface {
-
-    public void addTransfer(Transfer transfer);
-    public void removeTransfer(Transfer transfer);
-    public Transfer findByID(long id);
-    public List<Transfer> findAll();
-
+public interface LandsDAOInterface {
+    public void addLand(Lands club);
+    public void removeLand(Lands club);
+    public Lands findByID(long id);
+    public List<Lands> findAll();    
 }

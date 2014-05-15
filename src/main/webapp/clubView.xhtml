@@ -23,7 +23,7 @@
                 <div align="left" style=" padding-top: 40px; float: right; width: 350px; height: 350px; margin-right: 120px; font-size: 10px">
                     <p:panel header="Club Squad" style="height: 300px">
                         <p:scrollPanel mode="native" >
-                            <h:form id="form">
+                            <h:form id="club">
                                 <p:dataTable id="clubTable" var="player" value="#{clubBean.players}" rowKey="#{player.jerseynumber}" selectionMode="single" 
                                              selection="#{clubBean.selectedPlayer}" >  
                                     <p:ajax event="rowSelect"  listener="#{clubBean.onRowSelect}">

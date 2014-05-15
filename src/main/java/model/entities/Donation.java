@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package model;
+package model.entities;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -118,7 +118,7 @@ public class Donation implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Donation[ iddonation=" + iddonation + " ]";
+        return "model.entities.Donation[ iddonation=" + iddonation + " ]";
     }
     
 }

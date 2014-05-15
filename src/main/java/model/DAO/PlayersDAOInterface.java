@@ -6,7 +6,7 @@
 package model.DAO;
 
 import java.util.List;
-import model.Players;
+import model.entities.Players;
 
 /**
  *

@@ -11,9 +11,9 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import model.Clubs;
-import model.Players;
-import model.Transfer;
+import model.entities.Clubs;
+import model.entities.Players;
+import model.entities.Transfer;
 
 /**
  *
@@ -62,16 +62,63 @@ public class TransfersDAO implements TransfersDAOInterface {
     }
     
     public List<Transfer> findByClub(String clubname) {
-        System.out.println("TransferDAO findbyclub clubname: " + clubname);
-        Clubs club  = clubDAO.findByName(clubname);
-        System.out.println(club.getIdclubs());
-        return em.createQuery("SELECT t FROM Transfer t WHERE t.clubid.idclubs = ?1")
-                .setParameter(1, club.getIdclubs()).getResultList();
+        return em.createQuery("SELECT t FROM Transfer t WHERE t.clubid.clubname = ?1")
+                .setParameter(1, clubname).getResultList();
     }
     
     public List<Transfer> findByPlayer(Players player) {
         return em.createQuery("SELECT t FROM Transfer t WHERE t.playerid = ?1")
                 .setParameter(1, player).getResultList();
+    }
+    
+    public List<Transfer> findByLeague(String leaguename) {
+        return em.createQuery("SELECT t FROM Transfer t WHERE t.clubid.leagueid.leaguename = ?1")
+                .setParameter(1, leaguename).getResultList();
+    }
+    
+    public List<Transfer> findByLand(String landname) {
+        return em.createQuery("SELECT t FROM Transfer t WHERE t.clubid.leagueid.landid.landname = ?1")
+                .setParameter(1, landname).getResultList();
+    }
+    
+    public List<Transfer> findByContinent(String continent) {
+        return em.createQuery("SELECT t FROM Transfer t Where t.clubid.leagueid.landid.continentid = ?1")
+                .setParameter(1, continent).getResultList();
+    }
+    
+    public List<Transfer> findTransfersFromClub(String clubname) {
+        return em.createQuery("SELECT t FROM Transfer t WHERE t.playerid.clubid.clubname = ?1")
+                .setParameter(1, clubname).getResultList();
+    }
+        
+    public List<Transfer> findTransfersFromLeague(String leaguename) {
+        return em.createQuery("SELECT t FROM Transfer t WHERE t.playerid.clubid.leagueid.leaguename = ?1 AND t.clubid.leagueid.leaguename != ?2")
+                .setParameter(1, leaguename).setParameter(2, leaguename).getResultList();
+    }
+    
+    public List<Transfer> findTransfersToLeague(String leaguename) {
+        return em.createQuery("SELECT t FROM Transfer t WHERE t.playerid.clubid.leagueid.leaguename != ?1 AND t.clubid.leagueid.leaguename = ?2")
+                .setParameter(1, leaguename).setParameter(2, leaguename).getResultList();
+    }
+    
+    public List<Transfer> findTransfersFromLand(String landname) {
+        return em.createQuery("SELECT t FROM Transfer t WHERE t.playerid.clubid.leagueid.landid.landname = ?1 AND t.clubid.leagueid.landid.landname != ?2")
+                .setParameter(1, landname).setParameter(2, landname).getResultList();
+    }
+    
+    public List<Transfer> findTransfersToLand(String landname) {
+        return em.createQuery("SELECT t FROM Transfer t WHERE t.playerid.clubid.leagueid.landid.landname != ?1 AND t.clubid.leagueid.landid.landname = ?2")
+                .setParameter(1, landname).setParameter(2, landname).getResultList();
+    }
+    
+    public List<Transfer> findTransfersFromContinent(String continentname) {
+        return em.createQuery("SELECT t FROM Transfer t WHERE t.playerid.clubid.leagueid.landid.continentid.continentname = ?1 AND t.clubid.leagueid.landid.continentid.continentname != ?2")
+                .setParameter(1, continentname).setParameter(2, continentname).getResultList();
+    }
+    
+    public List<Transfer> findTransfersToContinent(String continentname) {
+        return em.createQuery("SELECT t FROM Transfer t WHERE t.playerid.clubid.leagueid.landid.continentid.continentname != ?1 AND t.clubid.leagueid.landid.continentid.continentname = ?2")
+                .setParameter(1, continentname).setParameter(2, continentname).getResultList();
     }
 
 }

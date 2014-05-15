@@ -12,14 +12,13 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import model.Clubs;
-import model.Players;
-import model.Transfer;
+import model.entities.Clubs;
+import model.entities.Players;
+import model.entities.Transfer;
 import org.primefaces.event.SelectEvent;
 
 @Named("clubBean")
@@ -47,7 +46,6 @@ public class ClubBean implements Serializable {
         System.out.println("Club: " + mb.getClub());
         clubs = controller.getClubs().findAll();
         clubPlayers = controller.getPlayers().findByClub(mb.getClub());
-
     }
     
     public void onRowSelect(SelectEvent event) throws IOException {

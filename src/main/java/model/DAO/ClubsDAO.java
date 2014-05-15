@@ -10,7 +10,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import model.Clubs;
+import model.entities.Clubs;
 
 /**
  *
@@ -52,5 +52,10 @@ public class ClubsDAO implements ClubsDAOInterface {
         getClubByName.setParameter("clubname", clubName);
         System.out.println("clubDAO find by name" + clubName);
         return (Clubs)getClubByName.getSingleResult();       
+    }
+    
+    public List<Clubs> findByLeague(String league) {
+        return em.createQuery("SELECT c FROM Clubs c WHERE c.leagueid.leaguename = ?1")
+                .setParameter(1, league).getResultList();
     }
 }

@@ -6,8 +6,8 @@
 
 package model.DTO;
 
-import model.Clubs;
-import model.Players;
+import model.entities.Clubs;
+import model.entities.Players;
 
 /**
  *

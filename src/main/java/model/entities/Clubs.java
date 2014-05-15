@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package model;
+package model.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -47,6 +49,9 @@ public class Clubs implements Serializable {
     private Collection<Transfer> transferCollection;
     @OneToMany(mappedBy = "clubid")
     private Collection<Players> playersCollection;
+    @JoinColumn(name = "leagueid", referencedColumnName = "idleagues")
+    @ManyToOne
+    private Leagues leagueid;
 
     public Clubs() {
     }
@@ -89,6 +94,14 @@ public class Clubs implements Serializable {
         this.playersCollection = playersCollection;
     }
 
+    public Leagues getLeagueid() {
+        return leagueid;
+    }
+
+    public void setLeagueid(Leagues leagueid) {
+        this.leagueid = leagueid;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -111,7 +124,7 @@ public class Clubs implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Clubs[ idclubs=" + idclubs + " ]";
+        return "model.entities.Clubs[ idclubs=" + idclubs + " ]";
     }
     
 }

@@ -12,7 +12,7 @@ import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import model.Clubs;
+import model.entities.Clubs;
 
 /**
  *

@@ -10,8 +10,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import model.Clubs;
-import model.Players;
+import model.entities.Clubs;
+import model.entities.Players;
 
 /**
  *
@@ -61,5 +61,15 @@ public class PlayersDAO implements PlayersDAOInterface {
         TypedQuery getPlayerByName = em.createNamedQuery("Players.findByPlayername", Players.class);
         getPlayerByName.setParameter("playername", playerName);
         return (Players)getPlayerByName.getSingleResult();
+    }
+    
+    public List<Players> findByLeague(String league) {
+        return em.createQuery("SELECT p FROM Players p WHERE p.clubid.leagueid.leaguename = ?1")
+                .setParameter(1, league).getResultList();
+    }
+    
+    public List<Players> findByLand(String land) {
+        return em.createQuery("SELECT p FROM Players p WHERE p.clubid.leagueid.landid.landname = ?1")
+                .setParameter(1, land).getResultList();
     }
 }

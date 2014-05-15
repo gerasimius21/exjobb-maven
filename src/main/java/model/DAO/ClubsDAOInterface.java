@@ -7,7 +7,7 @@
 package model.DAO;
 
 import java.util.List;
-import model.Clubs;
+import model.entities.Clubs;
 
 /**
  *

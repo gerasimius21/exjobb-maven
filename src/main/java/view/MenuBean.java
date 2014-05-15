@@ -9,11 +9,15 @@ import controller.Controller;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import model.Clubs;
+import model.entities.Clubs;
+import model.entities.Continents;
+import model.entities.Lands;
+import model.entities.Leagues;
 
 /**
  *
@@ -21,37 +25,81 @@ import model.Clubs;
  */
 @Named("menu")
 @SessionScoped
-public class MenuBean implements Serializable{
+public class MenuBean implements Serializable {
 
     @EJB
     Controller controller;
-    
+
     private String club;
+
+    private String land;
+
+    private String continent;
+
+    private String league;
     
-//    private String player;
-//    
-//    public String getPlayer() {
-//        return player;
+    
+//    @PostConstruct
+//    public void init() {
+//        continents = controller.getAllContinents();
 //    }
-//    
-//    public void setPlayer(String player) {
-//        this.player = player;
-//    }
- 
+    
+    public List<Continents> getAllContinents() {
+        return controller.getAllContinents();
+    }
+
     public String getClub() {
         return club;
     }
 
+    public String getContinent() {
+        return continent;
+    }
+
+    public String getLand() {
+        return land;
+    }
+
+    public String getLeague() {
+        return league;
+    }
+    
     public void setClub(String club) throws IOException {
         System.out.println("Menu bean club: " + club);
         this.club = club;
         FacesContext.getCurrentInstance().getExternalContext().redirect("clubView.jsf");
     }
 
+    public void setContinent(String continent) throws IOException {
+        System.out.println("Menu bean continent: " + continent);
+        this.continent = continent;
+        FacesContext.getCurrentInstance().getExternalContext().redirect("continentView.jsf");
+    }
+
+    public void setLand(String land) throws IOException {
+        System.out.println("Menu bean land: " + land);
+        this.land = land;
+        FacesContext.getCurrentInstance().getExternalContext().redirect("landView.jsf");
+    }
+
+    public void setLeague(String league) throws IOException {
+        System.out.println("Menu bean league: " + league);
+        this.league = league;
+        FacesContext.getCurrentInstance().getExternalContext().redirect("leagueView.jsf");
+    }
+
     public List<Clubs> getAllClubs() {
         System.out.println("getting all clubs");
-        return controller.getAllClubs();
+        return controller.getAllClubsPerLeague(league);
     }
-    
 
+    public List<Lands> getAllLands() {
+        System.out.println("getting all lands");
+        return controller.getAllLandsPerContinent(continent);
+    }
+
+    public List<Leagues> getAllLeagues() {
+        System.out.println("getting all leagues");
+        return controller.getAllLeaguesPerLand(land);
+    }
 }

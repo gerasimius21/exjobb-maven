@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package model;
+package model.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -130,7 +130,7 @@ public class Transfer implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Transfer[ idtransfer=" + idtransfer + " ]";
+        return "model.entities.Transfer[ idtransfer=" + idtransfer + " ]";
     }
     
 }
