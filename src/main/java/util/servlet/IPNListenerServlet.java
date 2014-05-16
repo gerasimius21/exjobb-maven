@@ -31,13 +31,13 @@ public class IPNListenerServlet extends HttpServlet {
             HttpServletResponse response) throws ServletException, IOException {
 // For a full list of configuration parameters refer in wiki page.
 // (https://github.com/paypal/sdk-core-java/wiki/SDK-Configuration-Parameters)
-        Map<String, String> mode = Configuration.getConfig();
-        IPNMessage ipnlistener = new IPNMessage(request, mode);
-        boolean isIpnVerified = ipnlistener.validate();
-        String transactionType = ipnlistener.getTransactionType();
-        Map<String, String> map = ipnlistener.getIpnMap();
-
-        System.out.println(IPNListenerServlet.class.toString() + "******* IPN (name:value) pair : " + map + " "
-                + "######### TransactionType : " + transactionType + " ======== IPN verified : " + isIpnVerified);
+//        Map<String, String> mode = Configuration.getConfig();
+//        IPNMessage ipnlistener = new IPNMessage(request, mode);
+//        boolean isIpnVerified = ipnlistener.validate();
+//        String transactionType = ipnlistener.getTransactionType();
+//        Map<String, String> map = ipnlistener.getIpnMap();
+//
+//        System.out.println(IPNListenerServlet.class.toString() + "******* IPN (name:value) pair : " + map + " "
+//                + "######### TransactionType : " + transactionType + " ======== IPN verified : " + isIpnVerified);
     }
 }

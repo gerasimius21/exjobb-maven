@@ -11,19 +11,18 @@
     <h:body>
         <ui:composition template="template/common/layout.xhtml">
             <ui:define name="content">
-<!--                <h:form id="form">  -->
-<!--                    <div style="right: 380px; position: relative; width: 200px">
-                        <p:panelMenu style="width:200px">
-                            <p:submenu label="Leagues">
-                                <c:forEach items="#{menu.allLeagues}" var="league">
-                                    <p:menuitem value="#{league.leaguename}">
-                                        <f:setPropertyActionListener target="#{menu.league}" value="#{league.leaguename}"/>
-                                    </p:menuitem>
-                                </c:forEach>  
-                            </p:submenu>
-                        </p:panelMenu>
-                    </div>
--->                    <div align="left" style=" float: left; width: 350px; height: 500px; margin-left: 25px; margin-top: 25px; font-size: 10px">
+                <h:form id="landView">
+                    <p:breadCrumb>
+                        <p:menuitem value="Home" url="index.jsf" />  
+                        <p:menuitem value="#{menu.continent}"  update="landView">
+                            <f:setPropertyActionListener value="#{menu.continent}" target="#{menu.continent}"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{menu.land}" update="landView">
+                            <f:setPropertyActionListener value="#{menu.land}" target="#{menu.land}"/>
+                        </p:menuitem>
+                    </p:breadCrumb>
+
+                    <div align="left" style=" float: left; width: 350px; height: 500px; margin-left: 25px; margin-top: 25px; font-size: 10px">
                         <p:panel header="Hot Transfers To Land" style="height: 300px">
                             <p:dataTable id="transfers" var="toTransfers" value="#{landBean.hotTransfersToLand}" tableStyle="width:322px">
                                 <p:column headerText="Player">
@@ -54,7 +53,7 @@
                             </p:dataTable>
                         </p:panel>
                     </div>
-<!--                </h:form>-->
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>

@@ -28,7 +28,7 @@ public class LoginPageCode implements Serializable {
                 = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         String sessionId = session.getId();
         String appId = "244112569108536";
-        String redirectUrl = "http://localhost:8080/facebooklogin1/index.sec";
+        String redirectUrl = "http://localhost:8080/exjobb-maven/index.sec";
         String returnValue = "https://www.facebook.com/dialog/oauth?client_id="
                 + appId + "&redirect_uri=" + redirectUrl
                 + "&scope=email,user_birthday&state=" + sessionId;

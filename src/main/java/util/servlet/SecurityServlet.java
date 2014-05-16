@@ -26,7 +26,7 @@ public class SecurityServlet extends HttpServlet {
 
     private static final long serialVersionUID = 8071426090770097330L;
     private String appId = "244112569108536";
-    private String redirectUrl = "http://localhost:8080/facebooklogin1/index.sec";
+    private String redirectUrl = "http://localhost:8080/exjobb-maven/index.sec";
     private String faceAppSecret = "7bbffb4ab2fbffe129a16ed67ed72c9c";
 
     public SecurityServlet() {
@@ -65,7 +65,7 @@ public class SecurityServlet extends HttpServlet {
         String token = null;
         if (faceCode != null && !"".equals(faceCode)) {
             String appId = "244112569108536";
-            String redirectUrl = "http://localhost:8080/facebooklogin1/index.sec";
+            String redirectUrl = "http://localhost:8080/exjobb-maven/index.sec";
             String faceAppSecret = "7bbffb4ab2fbffe129a16ed67ed72c9c";
             String newUrl = "https://graph.facebook.com/oauth/access_token?client_id="
                     + appId + "&redirect_uri=" + redirectUrl + "&client_secret="

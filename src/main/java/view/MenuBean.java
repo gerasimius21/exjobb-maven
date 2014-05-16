@@ -73,18 +73,27 @@ public class MenuBean implements Serializable {
     public void setContinent(String continent) throws IOException {
         System.out.println("Menu bean continent: " + continent);
         this.continent = continent;
+        this.land = "";
+        this.league= "";
+        this.club= "";
+        System.out.println("resetting land league and club");
         FacesContext.getCurrentInstance().getExternalContext().redirect("continentView.jsf");
     }
 
     public void setLand(String land) throws IOException {
         System.out.println("Menu bean land: " + land);
         this.land = land;
+        this.league="";
+        this.club="";
+        System.out.println("resetting league and club");
         FacesContext.getCurrentInstance().getExternalContext().redirect("landView.jsf");
     }
 
     public void setLeague(String league) throws IOException {
         System.out.println("Menu bean league: " + league);
         this.league = league;
+        this.club="";
+        System.out.println("resetting club");
         FacesContext.getCurrentInstance().getExternalContext().redirect("leagueView.jsf");
     }
 

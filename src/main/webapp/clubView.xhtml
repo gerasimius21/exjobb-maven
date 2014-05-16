@@ -13,23 +13,38 @@
         <ui:composition template="template/common/layout.xhtml">
 
             <ui:define name="content">
+                <h:form id="clubView">
+                    <p:breadCrumb>
+                        <p:menuitem value="Home" url="index.jsf" />  
+                        <p:menuitem value="#{menu.continent}" update="clubView">
+                            <f:setPropertyActionListener value="#{menu.continent}" target="#{menu.continent}"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{menu.land}" update="clubView" >
+                            <f:setPropertyActionListener value="#{menu.land}" target="#{menu.land}"/>
+                        </p:menuitem> 
+                        <p:menuitem value="#{menu.league}" update="clubView">
+                            <f:setPropertyActionListener value="#{menu.league}" target="#{menu.league}"/>
+                        </p:menuitem> 
+                        <p:menuitem value="#{menu.club}" update="clubView">
+                            <f:setPropertyActionListener value="#{menu.club}" target="#{menu.club}"/>
+                        </p:menuitem>
+                    </p:breadCrumb>
+                    <div style="float: left; width: 350px; height: 350px; margin-left: 25px; margin-top: 25px">
+                        <p:panel header="Club Name" style="height: 300px">
+                            <h:graphicImage width="133" height="170" value="images/unknown.png"/>
+                        </p:panel>
+                    </div>
 
-                <div style="float: left; width: 350px; height: 350px; margin-left: 25px; margin-top: 25px">
-                    <p:panel header="Club Name" style="height: 300px">
-                        <h:graphicImage width="133" height="170" value="images/unknown.png"/>
-                    </p:panel>
-                </div>
+                    <div align="left" style="float: right; width: 350px; height: 350px; margin-right: 25px; margin-top: 25px; font-size: 10px">
+                        <p:panel header="Club Squad" style="height: 300px">
+                            <p:scrollPanel mode="native" >
 
-                <div align="left" style="float: right; width: 350px; height: 350px; margin-right: 25px; margin-top: 25px; font-size: 10px">
-                    <p:panel header="Club Squad" style="height: 300px">
-                        <p:scrollPanel mode="native" >
-                            <h:form id="club">
                                 <p:dataTable id="clubTable" var="player" value="#{clubBean.players}" rowKey="#{player.jerseynumber}" selectionMode="single" 
                                              selection="#{clubBean.selectedPlayer}" >
-                                    
-<!--                                    <p:ajax event="rowSelect" update=":form:display" oncomplete="clubDialog.show()" /> -->
+
+                                    <!--                                    <p:ajax event="rowSelect" update=":form:display" oncomplete="clubDialog.show()" /> -->
                                     <p:ajax event="rowSelect"  listener="#{clubBean.onRowSelect}">
-                                            <f:setPropertyActionListener target="#{playerBean.selectedPlayer}" value="#{clubBean.selectedPlayer.playername}"/>
+                                        <f:setPropertyActionListener target="#{playerBean.selectedPlayer}" value="#{clubBean.selectedPlayer.playername}"/>
                                     </p:ajax> 
                                     <p:column headerText="Player">  
                                         <h:outputText value="#{player.jerseynumber}" />
@@ -54,67 +69,67 @@
                                 </p:dataTable>  
 
                                 <p:dialog header="Player transfer" widgetVar="clubDialog" resizable="false"  
-                                      width="200">  
-                                <h:panelGrid id="display" columns="2" cellpadding="4">   
-                                    <h:outputText value="Player:" />  
-                                    <h:outputText value="#{clubBean.selectedPlayer.playername}" id="name"/>  
-                                    <h:outputText value="to club:" />  
-                                    <h:selectOneMenu value="#{clubBean.selectedClub}" converter="clubConverter">
-                                        <f:selectItems value="#{clubBean.clubs}" var="selectedClub" itemValue="#{selectedClub}" itemLabel="#{selectedClub.clubname}"/>
-                                    </h:selectOneMenu>
-                                    <h:outputLabel for="number" value="Amount:" style="font-weight:bold"/>                      
-                                    <h:inputText id="number" value="#{preBean.amount}" label="Number">  
-                                        <f:convertNumber currencyCode="EUR" type="currency"/>
-                                        <!--                                <f:validateDoubleRange minimum="1" maximum="12" />  -->
-                                    </h:inputText>  
-                                </h:panelGrid>  
-                                <h:commandButton value=" " action="#{preBean.preapprove()}" style="background-image: url(./images/paynow.gif) ; width: 107px; height: 26px"  >
-                                </h:commandButton>
-                            </p:dialog>
-                            </h:form> 
-                        </p:scrollPanel>
-                    </p:panel>
-                </div>
-                
-                <div align="left" style="float: left; width: 350px; height: 500px; margin-left: 25px; font-size: 10px">
-                    <p:panel header="Hot Transfers To Club" style="height: 300px">
-                        <p:dataTable id="otherPlayers"  var="oTransfers" value="#{clubBean.hotTranfersToClub}">
-                            <!--                            <f:facet name="header">
-                                                            Hot Transfers To Club
-                                                        </f:facet>-->
-                            <p:column headerText="Player">
-                                <h:outputText value="#{oTransfers.playerid.playername}"/>
-                            </p:column>
-                            <p:column headerText="From Club">
-                                <h:outputText value="#{oTransfers.playerid.clubid.clubname}"/>
-                            </p:column>
-                            <p:column headerText="Current Donations Amount">
-                                <h:outputText value="#{oTransfers.allDonations}"/>
-                            </p:column>
-                        </p:dataTable>
-                    </p:panel>
-                
-                </div>
-                
-                <div align="left" style="float: right; width: 350px; height: 500px; margin-right: 25px; font-size: 10px">
-                    <p:panel header="Hot Transfers From Club" style="height: 300px">
-                        <p:dataTable id="clubPlayers" var="cTransfers" value="#{clubBean.hotTransfersFromClub}">
-                            <!--                            <f:facet name="header">
-                                                            Hot Transfers From Club
-                                                        </f:facet>-->
-                            <p:column headerText="Player">
-                                <h:outputText value="#{cTransfers.playerid.playername}" />
-                            </p:column>
-                            <p:column headerText="To Club">
-                                <h:outputText value="#{cTransfers.clubid.clubname}"/>
-                            </p:column>
-                            <p:column headerText="Current Donations Amount">
-                                <h:outputText value="#{cTransfers.allDonations}"/>
-                            </p:column>
-                        </p:dataTable>
-                    </p:panel>
-                </div>
+                                          width="200">  
+                                    <h:panelGrid id="display" columns="2" cellpadding="4">   
+                                        <h:outputText value="Player:" />  
+                                        <h:outputText value="#{clubBean.selectedPlayer.playername}" id="name"/>  
+                                        <h:outputText value="to club:" />  
+                                        <h:selectOneMenu value="#{clubBean.selectedClub}" converter="clubConverter">
+                                            <f:selectItems value="#{clubBean.clubs}" var="selectedClub" itemValue="#{selectedClub}" itemLabel="#{selectedClub.clubname}"/>
+                                        </h:selectOneMenu>
+                                        <h:outputLabel for="number" value="Amount:" style="font-weight:bold"/>                      
+                                        <h:inputText id="number" value="#{preBean.amount}" label="Number">  
+                                            <f:convertNumber currencyCode="EUR" type="currency"/>
+                                            <!--                                <f:validateDoubleRange minimum="1" maximum="12" />  -->
+                                        </h:inputText>  
+                                    </h:panelGrid>  
+                                    <h:commandButton value=" " action="#{preBean.preapprove()}" style="background-image: url(./images/paynow.gif) ; width: 107px; height: 26px"  >
+                                    </h:commandButton>
+                                </p:dialog>
+                                
+                            </p:scrollPanel>
+                        </p:panel>
+                    </div>
 
+                    <div align="left" style="float: left; width: 350px; height: 500px; margin-left: 25px; font-size: 10px">
+                        <p:panel header="Hot Transfers To Club" style="height: 300px">
+                            <p:dataTable id="otherPlayers"  var="oTransfers" value="#{clubBean.hotTranfersToClub}">
+                                <!--                            <f:facet name="header">
+                                                                Hot Transfers To Club
+                                                            </f:facet>-->
+                                <p:column headerText="Player">
+                                    <h:outputText value="#{oTransfers.playerid.playername}"/>
+                                </p:column>
+                                <p:column headerText="From Club">
+                                    <h:outputText value="#{oTransfers.playerid.clubid.clubname}"/>
+                                </p:column>
+                                <p:column headerText="Current Donations Amount">
+                                    <h:outputText value="#{oTransfers.allDonations}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
+
+                    </div>
+
+                    <div align="left" style="float: right; width: 350px; height: 500px; margin-right: 25px; font-size: 10px">
+                        <p:panel header="Hot Transfers From Club" style="height: 300px">
+                            <p:dataTable id="clubPlayers" var="cTransfers" value="#{clubBean.hotTransfersFromClub}">
+                                <!--                            <f:facet name="header">
+                                                                Hot Transfers From Club
+                                                            </f:facet>-->
+                                <p:column headerText="Player">
+                                    <h:outputText value="#{cTransfers.playerid.playername}" />
+                                </p:column>
+                                <p:column headerText="To Club">
+                                    <h:outputText value="#{cTransfers.clubid.clubname}"/>
+                                </p:column>
+                                <p:column headerText="Current Donations Amount">
+                                    <h:outputText value="#{cTransfers.allDonations}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
+                    </div>
+                </h:form>
             </ui:define>
 
         </ui:composition>

@@ -38,6 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Clubs.findByClubname", query = "SELECT c FROM Clubs c WHERE c.clubname = :clubname"),
     @NamedQuery(name = "Clubs.findByEmail", query = "SELECT c FROM Clubs c WHERE c.email = :email")})
 public class Clubs implements Serializable {
+    @OneToMany(mappedBy = "favoriteTeam")
+    private Collection<Userinformation> userinformationCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -149,6 +151,15 @@ public class Clubs implements Serializable {
     @Override
     public String toString() {
         return "model.entities.Clubs[ idclubs=" + idclubs + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Userinformation> getUserinformationCollection() {
+        return userinformationCollection;
+    }
+
+    public void setUserinformationCollection(Collection<Userinformation> userinformationCollection) {
+        this.userinformationCollection = userinformationCollection;
     }
     
 }

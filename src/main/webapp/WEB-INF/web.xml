@@ -5,7 +5,7 @@
          version="3.0">
     <display-name>TEST</display-name>
     <welcome-file-list>
-        <welcome-file>addPlayerView.jsf</welcome-file>
+        <welcome-file>firstTimeLogin.jsf</welcome-file>
     </welcome-file-list>
     <!--   <servlet> -->
     <!--     <servlet-name>SecurityServlet</servlet-name> -->

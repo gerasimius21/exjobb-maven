@@ -18,12 +18,14 @@ import model.DAO.LandsDAO;
 import model.DAO.LeaguesDAO;
 import model.DAO.PlayersDAO;
 import model.DAO.TransfersDAO;
+import model.DAO.UserinformationDAO;
 import model.DTO.DonationDTO;
 import model.DTO.TransferDTO;
 import model.entities.Clubs;
 import model.entities.Donation;
 import model.entities.Players;
 import model.entities.Transfer;
+import model.entities.Userinformation;
 import util.comparator.DonationComparator;
 
 /**
@@ -53,6 +55,9 @@ public class Controller {
 
     @Inject
     LeaguesDAO leagueDAO;
+    
+    @Inject
+    UserinformationDAO userinfoDAO;
 
     public PlayersDAO getPlayers() {
         return playerDAO;
@@ -202,6 +207,10 @@ public class Controller {
     
     public void removeTransfer(Transfer t){
         transferDAO.removeTransfer(t);
+    }
+
+    public void addUserToDB(Userinformation uinfo) {
+        userinfoDAO.addUserinformation(uinfo);
     }
 
 }
