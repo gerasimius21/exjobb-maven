@@ -27,7 +27,7 @@ public class AddPlayerBean {
     @EJB
     Controller controller;
     
-    Players player;
+    private Players player;
 
     private String playername;
     private String position;

@@ -6,7 +6,15 @@
 package view;
 
 import controller.Controller;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import model.entities.Clubs;
 import model.entities.Userinformation;
@@ -16,11 +24,15 @@ import model.entities.Userinformation;
  * @author Semir
  */
 @Named("firtTimeBean")
-public class firstTimeLogin {
+@SessionScoped
+public class firstTimeLogin implements Serializable{
     
     @EJB
     Controller controller;
-
+    
+    @Inject
+    LoginPageCode lp;
+    
     private String name;
 
     private Integer age;
@@ -71,7 +83,7 @@ public class firstTimeLogin {
         this.email = email;
     }
 
-    public void addUserToDB() {
+    public void addUserToDB() throws IOException {
         Userinformation uinfo = new Userinformation();
         uinfo.setAge(age);
         uinfo.setCountry(country);
@@ -79,6 +91,24 @@ public class firstTimeLogin {
         uinfo.setName(name);
         uinfo.setEmail(email);
         controller.addUserToDB(uinfo);
+        FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
+    }
+    
+    @PostConstruct
+    public void infoExists(){
+        
+        setEmail(lp.getUserFromSessionEmail());
+        
+        if(controller.infoExists(email)){
+            
+        }else{
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("firstTimeLogin.jsf");
+            } catch (IOException ex) {
+                Logger.getLogger(firstTimeLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
     }
 
 }

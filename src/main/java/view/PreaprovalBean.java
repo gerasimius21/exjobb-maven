@@ -64,8 +64,8 @@ public class PreaprovalBean {
         preRequest.setEndingDate("2014-06-30");
         preRequest.setMaxNumberOfPayments(1);
 
-        System.out.println(mtb.getSelectedClub().getClubname());
-        System.out.println(amount);
+//        System.out.println(mtb.getSelectedClub().getClubname());
+//        System.out.println(amount);
 
         preRequest.setMaxTotalAmountOfAllPayments(amount);
         preRequest.setDisplayMaxTotalAmount(Boolean.TRUE);

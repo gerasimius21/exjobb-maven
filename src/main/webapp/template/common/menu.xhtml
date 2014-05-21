@@ -10,37 +10,39 @@
     <h:body>
         <ui:composition>
             <h:form id="form">
-                <div style="position: relative; width: 150px">
-                    <p:panelMenu style="width:150px">
-                        <p:submenu label="Continents">
-                            <c:forEach items="#{menu.allContinents}" var="continent">
-                                <p:menuitem value="#{continent.continentname}">
-                                    <f:setPropertyActionListener target="#{menu.continent}" value="#{continent.continentname}"/>
-                                </p:menuitem>
-                            </c:forEach>  
-                        </p:submenu>
-                        <p:submenu label="Lands">
-                            <c:forEach items="#{menu.allLands}" var="land">
-                                <p:menuitem value="#{land.landname}">
-                                    <f:setPropertyActionListener target="#{menu.land}" value="#{land.landname}"/>
-                                </p:menuitem>
-                            </c:forEach>  
-                        </p:submenu>
-                        <p:submenu label="Leagues">
-                            <c:forEach items="#{menu.allLeagues}" var="league">
-                                <p:menuitem value="#{league.leaguename}">
-                                    <f:setPropertyActionListener target="#{menu.league}" value="#{league.leaguename}"/>
-                                </p:menuitem>
-                            </c:forEach>  
-                        </p:submenu>
-                        <p:submenu label="Clubs">
-                            <c:forEach items="#{menu.allClubs}" var="club">
-                                <p:menuitem value="#{club.clubname}">
-                                    <f:setPropertyActionListener target="#{menu.club}" value="#{club.clubname}"/>
-                                </p:menuitem>
-                            </c:forEach>  
-                        </p:submenu>
-                    </p:panelMenu>
+                <div style="float: left; position: relative; width: 165px">
+                    <p:scrollPanel mode="native" style="width:165px;height:520px">
+                        <p:panelMenu style="width:150px">
+                            <p:submenu label="Continents">
+                                <c:forEach items="#{menu.allContinents}" var="continent">
+                                    <p:menuitem value="#{continent.continentname}">
+                                        <f:setPropertyActionListener target="#{menu.continent}" value="#{continent.continentname}"/>
+                                    </p:menuitem>
+                                </c:forEach>  
+                            </p:submenu>
+                            <p:submenu label="Lands">
+                                <c:forEach items="#{menu.allLands}" var="land">
+                                    <p:menuitem value="#{land.landname}">
+                                        <f:setPropertyActionListener target="#{menu.land}" value="#{land.landname}"/>
+                                    </p:menuitem>
+                                </c:forEach>  
+                            </p:submenu>
+                            <p:submenu label="Leagues">
+                                <c:forEach items="#{menu.allLeagues}" var="league">
+                                    <p:menuitem value="#{league.leaguename}">
+                                        <f:setPropertyActionListener target="#{menu.league}" value="#{league.leaguename}"/>
+                                    </p:menuitem>
+                                </c:forEach>  
+                            </p:submenu>
+                            <p:submenu label="Clubs">
+                                <c:forEach items="#{menu.allClubs}" var="club">
+                                    <p:menuitem value="#{club.clubname}">
+                                        <f:setPropertyActionListener target="#{menu.club}" value="#{club.clubname}"/>
+                                    </p:menuitem>
+                                </c:forEach>  
+                            </p:submenu>
+                        </p:panelMenu>
+                    </p:scrollPanel>
                 </div>
             </h:form>
         </ui:composition>

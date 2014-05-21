@@ -22,10 +22,12 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import model.entities.Donation;
 import model.entities.Transfer;
+import org.primefaces.context.RequestContext;
 
 @Named("transfBean")
 @ViewScoped
@@ -86,10 +88,11 @@ public class TransferBean implements Serializable {
                 executePayment(d.getPpkey(), d.getAmount(), this.selectedTransfers.get(i));
                 System.out.println("Compleating transaction for ppk: " + d.getPpkey());
             }
-            System.out.println("Removing transfer with player: " + selectedTransfers.get(i).getPlayerid().getPlayername() 
-                               + "and club: " + selectedTransfers.get(i).getClubid().getClubname());
+            System.out.println("Removing transfer with player: " + selectedTransfers.get(i).getPlayerid().getPlayername()
+                    + "and club: " + selectedTransfers.get(i).getClubid().getClubname());
             controller.removeTransfer(selectedTransfers.get(i));
         }
+        FacesContext.getCurrentInstance().getExternalContext().redirect("successTransfer.jsf");
 
     }
 
@@ -131,17 +134,17 @@ public class TransferBean implements Serializable {
 
         AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService(sdkConfig);
         payResponse = adaptivePaymentsService.pay(payRequest);
-        
+
         System.out.println("success ? " + (payResponse.getResponseEnvelope().getAck() == AckCode.SUCCESS));
         System.out.println("success with warning ? " + (payResponse.getResponseEnvelope().getAck() == AckCode.SUCCESSWITHWARNING));
-        if((payResponse.getResponseEnvelope().getAck() == AckCode.SUCCESS) || (payResponse.getResponseEnvelope().getAck() == AckCode.SUCCESSWITHWARNING)){
+        if ((payResponse.getResponseEnvelope().getAck() == AckCode.SUCCESS) || (payResponse.getResponseEnvelope().getAck() == AckCode.SUCCESSWITHWARNING)) {
             System.out.println("Removing donation with ppk : " + ppk);
             controller.removeDonations(ppk);
         }
     }
-    
-    public double roundByTwo(double d){
-        double ret = Math.round(d*100.0)/100.0;
+
+    public double roundByTwo(double d) {
+        double ret = Math.round(d * 100.0) / 100.0;
         return ret;
     }
 

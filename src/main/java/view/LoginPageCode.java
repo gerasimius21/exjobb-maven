@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpSession;
 public class LoginPageCode implements Serializable {
 
     private static final long serialVersionUID = -1611162265998907599L;
+    @Inject
 
     public String getFacebookUrlAuth() {
         HttpSession session
@@ -103,11 +105,10 @@ public class LoginPageCode implements Serializable {
 
     public String logout() throws IOException {
         
-        String s ="https://www.facebook.com/logout.php?access_token=ACCESS_TOKEN&confirm=1&next=REDIRECT";
-        
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        session = null;
-        return "login";
+        session.invalidate();
+        FacesContext.getCurrentInstance().getExternalContext().redirect("index.jsf");
+        return "index";
 
     }
 

@@ -12,9 +12,66 @@
     <h:body>
 
         <ui:composition template="template/common/layout.xhtml">
+            <ui:define name="header">
+
+                <div align="center" style="left: 50%;top: 10px; position: fixed; margin: 0 auto; z-index: 22;">
+                    <h:outputText rendered="#{not lp.loggedIn}" value="#{lp.welcomeLine}"></h:outputText>
+                </div>
+
+                <div style="height: 205px; width: 960px; background-color: #ffffff;">
+                    <div style="float: left; padding-top: 15px; margin-left: 25px; position: absolute">
+                        <h:graphicImage value="images/logo.jpg" width="" height="190"/>
+                    </div>
+
+                    <div style="float: left; padding-top: 15px; margin-left: 350px; margin-top: 10px; position: absolute">
+                        <h:graphicImage value="images/fansfer-text.png" style="padding-top: 15px; position: absolute" />
+                    </div>
+
+                    <div style="position: fixed; z-index: 21">
+
+                        <div style="position: absolute; z-index: 20; padding-top: 5px; left: 866px;">
+                            <h:form id="loginForm">
+
+                                <p:button rendered="#{lp.loggedIn}" style="background-image: url(images/fblogin.png); width: 87px; height: 21px" value=" " href="#{lp.facebookUrlAuth}">
+                                </p:button>
+
+                                <h:commandButton rendered="#{not lp.loggedIn}" value="Logout" action="#{lp.logout()}" style=" width: 87px; height: 21px">
+                                </h:commandButton>
+                            </h:form>
+
+                        </div>
+
+                    </div>
+                    <!--                <p:media value="http://www.youtube.com/v/KZnUr8lcqjo" style="top: 40px; left: 360px; position: relative" width="225" height="160" player="flash"/>-->
+                    <iframe width="225" height="160" src="//www.youtube.com/embed/Ul9wCaNjrkM?modestbranding=0;rel=0;showinfo=0;autohide=1" style="top: 40px; left: 360px; position: relative" frameborder="0"></iframe>
+
+                </div>
+
+
+            </ui:define>
+            <ui:define name="menu">
+
+
+            </ui:define>
+            <ui:define name="transfer">
+                <div style="margin: 0 auto; height: 35px; width: 958px; position: relative; 
+                     background-color: white;
+                     border:1px solid;
+                     border-color: #dadada;
+                     border-radius:0px;
+                     padding-top: 4px">
+                    <h:outputText style="font-size: 14px; padding-top: 5px" value="This is the first time you are logging in to fansfer.com, please provide the following information. "/>
+
+                </div>
+
+            </ui:define>
 
             <ui:define name="content">
-                <h:form id="addPlayer">  
+                <h:form id="addPlayer">
+
+
+                    <br/><br/><br/>
+
                     <table> 
                         <tr>
                             <td>Name:</td>	
@@ -42,13 +99,12 @@
 
                     </table>
 
-                    <h:commandButton value="Submit" action="#{addPlayerBean.addPlayerToDB()}"/>
+                    <h:commandButton value="Submit" action="#{firtTimeBean.addUserToDB()}"/>
 
 
                 </h:form> 
 
             </ui:define>
-            <h1>Login Page</h1>
         </ui:composition>
     </h:body>
 </html>

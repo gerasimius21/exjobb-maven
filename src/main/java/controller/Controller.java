@@ -22,7 +22,10 @@ import model.DAO.UserinformationDAO;
 import model.DTO.DonationDTO;
 import model.DTO.TransferDTO;
 import model.entities.Clubs;
+import model.entities.Continents;
 import model.entities.Donation;
+import model.entities.Lands;
+import model.entities.Leagues;
 import model.entities.Players;
 import model.entities.Transfer;
 import model.entities.Userinformation;
@@ -212,5 +215,31 @@ public class Controller {
     public void addUserToDB(Userinformation uinfo) {
         userinfoDAO.addUserinformation(uinfo);
     }
+
+    public boolean infoExists(String email) {
+        return userinfoDAO.findByEmail(email) != null;
+    }
+
+    public void addCountryToDB(Lands lands) {
+        landDAO.addLand(lands);
+    }
+
+    public void addLeagueToDB(Leagues league) {
+        leagueDAO.addLeague(league);
+    }
+
+    public List<Lands> getAllCountries() {
+        return landDAO.findAll();
+    }
+
+    public void addClubToDB(Clubs club) {
+        clubDAO.addClub(club);
+    }
+
+    public List<Leagues> getAllLeagues() {
+        return leagueDAO.findAll();
+    }
+    
+    
 
 }

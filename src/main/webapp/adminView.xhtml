@@ -33,48 +33,17 @@
                         <h:commandButton value="Login" action="#{adminLogin.testLogin}"></h:commandButton>
                     </h:panelGroup>
 
-                    <h:panelGroup rendered="#{adminLogin.login}">
-
-
-                        <div style="padding-top:20px ">
-                            <p:dataTable rows="5" paginator="true" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                                         rowsPerPageTemplate="5,10,15" id="transfer" var="trans" value="#{transfBean.transfers}" rowKey="#{trans.idtransfer}" 
-                                         tableStyle="width:400px" selection="#{transfBean.selectedTransfers}" selectionMode="multiple" style="width: 400px" >  
-                                <!--                        <p:ajax event="rowSelect" update=":form:display" oncomplete="clubDialog.show()" /> -->
-                                <p:column sortBy="#{trans.playerid.playername}" headerText="Player From: ">  
-                                    <h:outputText value="#{trans.playerid.playername}" />
-                                </p:column>                         
-                                <p:column sortBy="#{trans.clubid.clubname}" headerText="To Club:">  
-                                    <h:outputText value="#{trans.clubid.clubname}" />  
-                                </p:column>  
-                                <p:column headerText="Total Donation:">  
-                                    <h:outputText value="#{trans.allDonations}" />  
-                                </p:column>
-
-                                <f:facet name="footer">
-                                    <p:commandButton value="Next" icon="ui-icon-seek-next"
-                                                     update=":adminView:display" oncomplete="PF('carDialog').show()"/>
-                                </f:facet>
-
-                            </p:dataTable>
-                        </div>
-
-                        <p:dialog header="Car Detail" widgetVar="carDialog"
-                                  width="250" showEffect="explode" hideEffect="explode">
-
-                            <p:dataTable id="display"
-                                         value="#{transfBean.selectedTransfers}"
-                                         var="selectedTransfers">
-                                <p:column headerText="Player:">  
-                                    <h:outputText value="#{selectedTransfers.playerid.playername}" />  
-                                </p:column>
-                                <p:column headerText="Club:">  
-                                    <h:outputText value="#{selectedTransfers.clubid.clubname}" />  
-                                </p:column>
-                            </p:dataTable>
-                            <h:commandButton value="Submit" action="#{transfBean.compleatTransactions()}"/>
-                        </p:dialog>
+                    <h:panelGroup rendered="#{adminLogin.login}" style="font-size: 15px;">
+                        <h:outputText value="Hello Admin, what would you like to do ?"></h:outputText>
+                        <br/>
+                        <h:commandButton value="Add Country" action="addCountryView"></h:commandButton><br/>    
+                        <h:commandButton value="Add League" action="addLeagueView"></h:commandButton><br/>
+                        <h:commandButton value="Add Club" action="addClubView"></h:commandButton><br/>
+                        <h:commandButton value="Add Player" action="addPlayerView"></h:commandButton><br/>
+                        <h:commandButton value="Manager Transfers" action="manageTransfers"></h:commandButton><br/>
+                        
                     </h:panelGroup>
+
                 </h:form>
             </ui:define>
 

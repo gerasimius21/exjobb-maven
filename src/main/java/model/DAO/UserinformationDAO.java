@@ -5,9 +5,12 @@
  */
 package model.DAO;
 
+import java.sql.SQLException;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import model.entities.Userinformation;
@@ -45,8 +48,16 @@ public class UserinformationDAO implements UserinformationDAOInterface {
         return query.getResultList();
     }
 
+    @Override
     public Userinformation findByEmail(String email) {
-        return (Userinformation) em.createQuery("SELECT u FROM Userinformation u WHERE u.email = ?1").setParameter(1, email).getSingleResult();
+        Userinformation uinfo;
+        try {
+            uinfo = (Userinformation) em.createQuery("SELECT d FROM Userinformation d WHERE d.email = ?1").setParameter(1, email).getSingleResult();
+        } catch (NoResultException e) {
+            uinfo = null;
+            return uinfo;
+        };
+        return uinfo;
     }
 
 }

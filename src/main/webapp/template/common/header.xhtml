@@ -44,8 +44,8 @@
                             <p:button rendered="#{lp.loggedIn}" style="background-image: url(images/fblogin.png); width: 87px; height: 21px" value=" " href="#{lp.facebookUrlAuth}">
                             </p:button>
 
-                            <p:commandButton rendered="#{not lp.loggedIn}" update="@form" value="Logout" action="#{lp.logout()}" style=" width: 87px; height: 21px">
-                            </p:commandButton>
+                            <h:commandButton rendered="#{not lp.loggedIn}" value="Logout" action="#{lp.logout()}" style=" width: 87px; height: 21px">
+                            </h:commandButton>
                         </h:form>
 
                     </div>

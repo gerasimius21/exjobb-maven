@@ -12,31 +12,37 @@
         <ui:composition>
 
 
-            <div style="margin: 0 auto; height: 30px; width: 958px; position: relative; 
+            <div style="margin: 0 auto; height: 35px; width: 958px; position: relative; 
                  background-color: white;
                  border:1px solid;
                  border-color: #dadada;
-                 border-radius:0px;"> 
+                 border-radius:0px;
+                 padding-top: 4px"> 
 
 
 
-                <h:form style="padding-top: 2px"> 
-                    Player : 
-                    <h:inputText value="#{movetextBean.playerName}">
+                <h:form style="padding-top: 2px">
 
-                    </h:inputText>
-                    Team : 
-                    <h:selectOneMenu value="#{movetextBean.selectedClub}" converter="clubConverter">
+                    <h:outputText rendered="#{lp.loggedIn}" style="font-size: 15px" value="Please log in with Facebook to donate to for your favorite transfer!   "/> 
+                    <p:button rendered="#{lp.loggedIn}" style="background-image: url(images/fblogin.png); width: 87px; height: 21px" value=" " href="#{lp.facebookUrlAuth}">
+                    </p:button>
+
+
+                    <h:outputText rendered="#{not lp.loggedIn}" value="Player :"/> 
+                    <h:inputText rendered="#{not lp.loggedIn}" value="#{movetextBean.playerName}"/>
+
+                    <h:outputText rendered="#{not lp.loggedIn}" value="Team :"/> 
+                    <h:selectOneMenu rendered="#{not lp.loggedIn}" value="#{movetextBean.selectedClub}" converter="clubConverter">
                         <f:selectItems value="#{clubListBean.clubList}" var="selectedClub" itemValue="#{selectedClub}" itemLabel="#{selectedClub.clubname}"/>
                     </h:selectOneMenu>
 
-                    Amount :
-<!--                    <h:outputLabel for="prefix" value="Prefix: " />
-                    <p:spinner id="prefix" value="#{preBean.amount}" prefix="$" min="0" styleClass="someStyle"/>-->
-                    
-                    <h:inputText value="#{preBean.amount}" /> 
-                    
-                    <h:commandButton value="Donate" action="#{preBean.preapprove()}"></h:commandButton> 
+                    <h:outputText rendered="#{not lp.loggedIn}" value="Amount :"/> 
+                    <h:inputText rendered="#{not lp.loggedIn}" value="#{preBean.amount}" /> 
+                    <!--<p:spinner id="prefix" value="#{preBean.amount}" prefix="$" min="0" styleClass="someStyle"/>-->
+
+
+                    <h:commandButton rendered="#{not lp.loggedIn}" action="#{preBean.preapprove()}" style="background-image: url(images/paypaldonate.jpg); width: 123px; height: 28px" value=" "/>
+
                 </h:form>                 
 
 

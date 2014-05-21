@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+
+    </h:head>
+    <h:body>
+
+        <ui:composition template="template/common/layout.xhtml">
+
+            <ui:define name="content">
+                <h:form id="addLeague">
+                    <br/><br/><br/>
+                    <h:outputText value="Please provide the following information to add a league to the database!"></h:outputText>    
+                    <br/><br/>
+                    <table> 
+                        <tr>
+                            <td>League Name:</td>	
+                            <td>
+                                <h:inputText value="#{addLeagueBean.leaguename}"></h:inputText>
+                            </td>
+                        </tr>   
+                        <tr>
+                            <td>Country:</td>	
+                            <td>
+                                <h:selectOneMenu value="#{addLeagueBean.land}" converter="countryConverter">
+                                    <f:selectItems value="#{addLeagueBean.allCountries}" var="selectedCountry" itemValue="#{selectedCountry}" itemLabel="#{selectedCountry.landname}"/>
+                                </h:selectOneMenu>
+                            </td>	
+
+                        </tr>
+                    </table>
+                    <h:commandButton value="Submit" action="#{addLeagueBean.addLeagueToDB()}"/>
+
+
+                </h:form> 
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+
